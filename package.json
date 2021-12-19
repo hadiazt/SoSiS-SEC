@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "discord.js": "^13.3.1",
+    "dotenv": "^10.0.0",
+    "fs": "^0.0.1-security",
+    "ms": "^2.1.3",
+    "path": "^0.12.7",
+    "parse-ms": "2.1.0",
+    "quick.db": "^7.1.3"
+  },
+  "name": "anti-nuke",
+  "version": "1.0.0",
+  "description": "antinuke",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ghosty",
+  "license": "ISC"
+}
