@@ -18,36 +18,30 @@ client.on('ready', () => {
     console.log(`CONNECTED TO : ${client.user.tag}`);
 });
 
-const commandFiles = readdirSync(join(__dirname, "commands")).filter(file => file.endsWith(".js"));
 
+client.commands = new Discord.Collection();
+const commandFiles = readdirSync('./commands').filter(file => file.endsWith('.js'));
+console.log('------------- LOADING COMMANDS -------------');
 for (const file of commandFiles) {
-    const command = require(join(__dirname, "commands", `${file}`));
-    client.commands.set(command.name, command);
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.data.name, command);
+    console.log(command.data.name + ' LOADED');
 }
 
-client.on("messageCreate", async message => {
-    let prefix = await db.get(`prefix_${message.guild.id}`);
-    if (prefix === null) prefix = process.env.prefix;
-    if (message.author.bot) return;
-    if (message.channel.type === 'dm') return;
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isCommand()) return;
+    const command = client.commands.get(interaction.commandName);
+    if (!command) return;
 
-    if (message.content.startsWith(prefix)) {
-        
-        const args = message.content.slice(prefix.length).trim().split(/ +/);
-
-        const command = args.shift().toLowerCase();
-
-        if (!client.commands.has(command)) return;
-
-        try {
-            client.commands.get(command).run(client, message, args);
-
-        } catch (error) {
-            console.error(error);
-        }
+    try {
+        await command.execute(interaction, client);
+    } catch (error) {
+        console.error(error);
+        return interaction.reply({ content: `There was an error while executing this command!\nAsk Developers In : ${config.supportserver}`, ephemeral: true });
     }
-})
+});
 
+// -----------------------------------------
 
 client.on("roleCreate", async role => {
     const user = await role.guild.fetchAuditLogs({

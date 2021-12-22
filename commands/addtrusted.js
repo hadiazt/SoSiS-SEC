@@ -1,47 +1,51 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const Discord = require("discord.js")
 const db = require("quick.db")
-const ms = require('parse-ms');
-const { truncate } = require("fs");
+
 module.exports = {
-    name: "addtrusted",
-    description: "Set Guild Anit Raid Config",
-    run: async (client, message, args) => {
-        const guildicon = message.guild.iconURL();
-        if (message.author.id === message.guild.ownerId) {
+    data: new SlashCommandBuilder()
+        .setName('addtrusted')
+        .setDescription('Set Guild WhiteList')
+        .addUserOption(option =>
+            option.setName('user')
+                .setDescription('Mention The User')
+                .setRequired(true)),
+    async execute(interaction) {
 
-            let user = message.mentions.users.first()
-            if (!user) {
-                let usermention = new Discord.MessageEmbed()
-                    .setAuthor(message.author.tag, message.author.displayAvatarURL())
-                    .setDescription(`
-            **Mention User!** 
-            `)
-                    .setFooter(message.guild.name, guildicon)
+        if (interaction.user.id === interaction.guild.ownerId) {
 
-                return message.channel.send({
-                    embeds: [usermention]
-                });
-            }
-            let trustedusers = db.get(`trustedusers_${message.guild.id}`)
+            var user = interaction.options.get('user').value
+
+            let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
             if (trustedusers && trustedusers.find(find => find.user == user.id)) {
-                return message.channel.send(`This User It's Already on Trusted List`)
+                let existed = new Discord.MessageEmbed()
+                    .setColor('#f67975')
+                    .setTitle(`<:ignore:923151545569267752> **This User It's Already on Trusted List**`)
+                return interaction.reply({
+                    embeds: [existed]
+                });
             }
             let data = {
                 user: user.id
             }
-            db.push(`trustedusers_${message.guild.id}`, data)
+            db.push(`trustedusers_${interaction.guild.id}`, data)
             let added = new Discord.MessageEmbed()
-                .setAuthor(message.author.tag, message.author.displayAvatarURL())
-                .setDescription(`
-        **Added ${user} To Trusted List!** 
-        `)
-                .setFooter(message.guild.name, guildicon)
+                .setColor('#85db61')
+                .setDescription(`<:check:923151545401479179> **Added ${user} To Trusted List!**`)
 
-            return message.channel.send({
+            return interaction.reply({
                 embeds: [added]
             });
         }
-        message.channel.send(`Only Ownership Of The Guild Can Use That CMD!`)
-    }
-}
+        let owneronly = new Discord.MessageEmbed()
+            .setColor('#f67975')
+            .setTitle(`You Can't Use This Command!`)
+            .setDescription('<:ignore:923151545569267752> Only **Server Owner** Can Use This Command!')
+        return interaction.reply({
+            embeds: [owneronly]
+        });
+
+    },
+};
+
 

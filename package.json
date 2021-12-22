@@ -6,7 +6,9 @@
     "ms": "^2.1.3",
     "path": "^0.12.7",
     "parse-ms": "2.1.0",
-    "quick.db": "^7.1.3"
+    "quick.db": "^7.1.3",
+    "@discordjs/builders": "^0.8.2",
+    "@discordjs/rest": "^0.1.0-canary.0"
   },
   "name": "anti-nuke",
   "version": "1.0.0",
