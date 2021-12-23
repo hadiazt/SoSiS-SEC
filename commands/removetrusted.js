@@ -12,19 +12,13 @@ module.exports = {
         .setRequired(true)),
   async execute(interaction) {
 
-    if (message.author.id === message.guild.ownerId) {
+    if (interaction.user.id === interaction.guild.ownerId) {
 
+      var user = interaction.options.getUser('user')
 
-      var user = interaction.options.get('user').value
-
-      let database = db.get(`trustedusers_${message.guild.id}`)
-      if (database) {
+      let database = db.get(`trustedusers_${interaction.guild.id}`)
+      if (database && database.find(x => x.user === user.id)) {
         let data = database.find(x => x.user === user.id)
-        let unabletofind = new Discord.MessageEmbed()
-          .setColor('#f67975')
-          .setDescription(`<:ignore:923151545569267752>** Unable To Find That User On DataBase!** `)
-
-        if (!data) return message.channel.send(unabletofind)
 
         let value = database.indexOf(data)
         delete database[value]
@@ -33,24 +27,29 @@ module.exports = {
           return x != null && x != ''
         })
 
-        db.set(`trustedusers_${message.guild.id}`, filter)
+        db.set(`trustedusers_${interaction.guild.id}`, filter)
+        var log = db.get(`acitonslogs_${interaction.guild.id}`)
+        if (log !== null) log.send(`**${user.tag} Removed From Trusted List`)
+
         let deleted = new Discord.MessageEmbed()
           .setColor('#85db61')
-          .setDescription(`<:check:923151545401479179> **Successfully Removed ${user} From Trusted Users!** `)
+          .setDescription(`<:check:923151545401479179> **Successfully Removed ${user.tag} From Trusted Users!** `)
 
-        return message.channel.send({
+        return interaction.reply({
           embeds: [deleted]
         });
 
       } else {
+
         let notwl = new Discord.MessageEmbed()
           .setColor('#f67975')
-          .setDescription(`<:ignore:923151545569267752> That User IS Not On Trusted List!`)
+          .setDescription(`<:ignore:923151545569267752> That User IS Not On **Trusted List**!`)
         return interaction.reply({
           embeds: [notwl]
         });
       }
     }
+
 
     let owneronly = new Discord.MessageEmbed()
       .setColor('#f67975')
