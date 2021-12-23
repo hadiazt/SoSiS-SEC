@@ -14,7 +14,12 @@ module.exports = {
 
         if (interaction.user.id === interaction.guild.ownerId) {
 
-            var user = interaction.options.get('user').value
+            var user = interaction.options.getUser('user')
+            var owneral = new Discord.MessageEmbed()
+                .setColor('#85db61')
+                .setDescription(`**GUILD Owners Are In WhiteList By Default**`)
+
+            if (user.id === interaction.guild.ownerId) return interaction.reply({ embeds: [owneral] });
 
             let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
             if (trustedusers && trustedusers.find(find => find.user == user.id)) {
@@ -29,9 +34,11 @@ module.exports = {
                 user: user.id
             }
             db.push(`trustedusers_${interaction.guild.id}`, data)
+            var log = db.get(`acitonslogs_${interaction.guild.id}`)
+            if (log !== null) log.send(`**Added ${user.tag} To Trusted List!**`)
             let added = new Discord.MessageEmbed()
                 .setColor('#85db61')
-                .setDescription(`<:check:923151545401479179> **Added ${user} To Trusted List!**`)
+                .setDescription(`<:check:923151545401479179> **${user.tag} Added To Trusted List!**`)
 
             return interaction.reply({
                 embeds: [added]
