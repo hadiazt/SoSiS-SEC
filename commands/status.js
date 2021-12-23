@@ -53,9 +53,11 @@ module.exports = {
             .setDescription(`
 <:Latency:923592402067918919> **Latency :** ${client.ws.ping}ms
 <:Uptime:923592402302803998> **Uptime :** ${format(uptime)}
+
 <:Resources:923592402256662558> **Resources**
 <:space:874678195843125278> <:ram:923594665431793694> **RAM :** ${formatMemoryUsage(memoryData.heapUsed)}
 <:space:874678195843125278> <:cpu:923592401820463136> **CPU :** ${cpuPercent}%
+
 <:Size:923592402411876372> **Size**
 <:space:874678195843125278> <:guild:923594665683456060> **Servers :** ${client.guilds.cache.size}
 <:space:874678195843125278> <:user:923592406446772235> **Members :** ${MemberCount}
