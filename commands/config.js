@@ -26,7 +26,8 @@ module.exports = {
     var config = interaction.options.get('config').value
     var num = interaction.options.get('num').value
 
-    if (interaction.user.id === interaction.guild.ownerId) {
+    let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
+    if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
       if (config === 'setrolecreatelimit') {
         db.set(`rolecreatelimt_${interaction.guild.id}`, num)
         let = new Discord.MessageEmbed()
@@ -71,7 +72,7 @@ module.exports = {
         db.set(`banlimts_${interaction.guild.id}`, num)
         let = new Discord.MessageEmbed()
           .setColor('#85db61')
-          .setDescription(`<:check:923151545401479179> Channel Ban limits Has Been Set To ${num}`)
+          .setDescription(`<:check:923151545401479179> Ban limits Has Been Set To ${num}`)
         return interaction.reply({
           embeds: [done]
         });
@@ -81,21 +82,87 @@ module.exports = {
         db.set(`kicklimts_${interaction.guild.id}`, num)
         let = new Discord.MessageEmbed()
           .setColor('#85db61')
-          .setDescription(`<:check:923151545401479179> Channel Kick limits Has Been Set To ${num}`)
+          .setDescription(`<:check:923151545401479179> Kick limits Has Been Set To ${num}`)
         return interaction.reply({
           embeds: [done]
         });
       }
 
-      let owneronly = new Discord.MessageEmbed()
-        .setColor('#f67975')
-        .setTitle(`You Can't Use This Command!`)
-        .setDescription('<:ignore:923151545569267752> Only **Server Owner** Can Use This Command!')
-      return interaction.reply({
-        embeds: [owneronly]
-      });
+      var log = db.get(`acitonslogs_${interaction.guild.id}`)
+      if (log !== null) log.send(`**${config}** Edited To **${num}** By ${interaction.user.tag}`)
+    } else if (interaction.user.id === interaction.guild.ownerId) {
+      if (config === 'setrolecreatelimit') {
+        db.set(`rolecreatelimt_${interaction.guild.id}`, num)
+        let = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> RoleCreation limits Has Been Set To ${num}`)
+        return interaction.reply({
+          embeds: [done]
+        });
+      }
 
+      if (config === 'setroledeletelimit') {
+        db.set(`roledeletelimts_${interaction.guild.id}`, num)
+        let = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> RoleDelete limits Has Been Set To ${num}`)
+        return interaction.reply({
+          embeds: [done]
+        });
+      }
+
+      if (config === 'setchannelcreatelimit') {
+        db.set(`channelcreatelimts_${interaction.guild.id}`, num)
+        let = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> ChannelCreation limits Has Been Set To ${num}`)
+        return interaction.reply({
+          embeds: [done]
+        });
+      }
+
+      if (config === 'setchanneldeletelimit') {
+        db.set(`channeldeletelimts_${interaction.guild.id}`, num)
+        let = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> ChannelDelete limits Has Been Set To ${num}`)
+        return interaction.reply({
+          embeds: [done]
+        });
+      }
+
+      if (config === 'setbanlimit') {
+        db.set(`banlimts_${interaction.guild.id}`, num)
+        let = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> Ban limits Has Been Set To ${num}`)
+        return interaction.reply({
+          embeds: [done]
+        });
+      }
+
+      if (config === 'setkicklimit') {
+        db.set(`kicklimts_${interaction.guild.id}`, num)
+        let = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> Kick limits Has Been Set To ${num}`)
+        return interaction.reply({
+          embeds: [done]
+        });
+      }
+
+      var log = db.get(`acitonslogs_${interaction.guild.id}`)
+      if (log !== null) log.send(`**${config}** Edited To **${num}** By ${interaction.user.tag}`)
     }
+
+    let owneronly = new Discord.MessageEmbed()
+      .setColor('#f67975')
+      .setTitle(`You Can't Use This Command!`)
+      .setDescription('<:ignore:923151545569267752> Only **Server Owner** & **Trusted Users** Can Use This Command!')
+    return interaction.reply({
+      embeds: [owneronly]
+    });
+
   },
 };
 
