@@ -1,9 +1,8 @@
 const Discord = require('discord.js')
 const client = new Discord.Client({ intents: 14079, disableMentions: 'everyone', })
 const db = require('quick.db')
-const { join } = require('path');
 const { readdirSync } = require('fs');
-require('dotenv').config()
+const CONFIG = require('./config.json')
 client.commands = new Discord.Collection();
 
 client.on('ready', () => {
@@ -14,7 +13,6 @@ client.on('ready', () => {
             name: 'Your Server',
         }]
     });
-    console.clear();
     console.log(`CONNECTED TO : ${client.user.tag}`);
 });
 
@@ -28,6 +26,7 @@ for (const file of commandFiles) {
     console.log(command.data.name + ' LOADED');
 }
 
+
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
     const command = client.commands.get(interaction.commandName);
@@ -35,9 +34,10 @@ client.on('interactionCreate', async interaction => {
 
     try {
         await command.execute(interaction, client);
+        client.channels.cache.get(CONFIG.ACTION).send('```\n' + `${interaction.commandName} Triggerd In ${interaction.guild.name} | ${interaction.channel.name} By ${interaction.user.tag}` + '\n```')
     } catch (error) {
         console.error(error);
-        return interaction.reply({ content: `There was an error while executing this command!\nAsk Developers In : ${config.supportserver}`, ephemeral: true });
+        return interaction.reply({ content: `There was an error while executing this command!\nAsk Developers In : ${CONFIG.supportserver}`, ephemeral: true });
     }
 });
 
@@ -245,4 +245,4 @@ client.on("guildMemberRemove", async member => {
 })
 
 
-client.login(process.env.token)
+client.login(CONFIG.TOKEN)
