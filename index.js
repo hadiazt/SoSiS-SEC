@@ -13,6 +13,7 @@ client.on('ready', () => {
             name: 'Your Server',
         }]
     });
+    console.log('--------------------------');
     console.log(`CONNECTED TO : ${client.user.tag}`);
 });
 
