@@ -11,6 +11,7 @@ module.exports = {
 
     let wordlist = new Discord.MessageEmbed()
       .setTitle(`${interaction.guild.name}'s WhiteList Users :`)
+      .setColor('#85db61')
     let database = db.get(`trustedusers_${interaction.guild.id}`)
     if (database && database.length) {
       let array = []

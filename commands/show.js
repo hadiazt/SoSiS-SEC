@@ -28,7 +28,7 @@ module.exports = {
                         if (kicklimts === null) kicklimts = "<:disable:923158125878575144>"
 
                         let showembed = new Discord.MessageEmbed()
-
+                                .setColor('#85db61')
                                 .setTitle('Anti-Nuke Limits:')
                                 .addField('Role Create Limits', rolelimt, true)
                                 .addField('Role Delete Limits', roledelete, true)
@@ -59,6 +59,7 @@ module.exports = {
                         if (kicklimts === null) kicklimts = "<:disable:923158125878575144>"
 
                         let showembed = new Discord.MessageEmbed()
+                                .setColor('#85db61')
 
                                 .setTitle('Anti-Nuke Limits:')
                                 .addField('Role Create Limits', rolelimt, true)
