@@ -11,33 +11,35 @@ module.exports = {
                 let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
 
                 let rolelimt = db.get(`rolecreatelimt_${interaction.guild.id}`)
-                if (rolelimt === null) rolelimt = "<:disable:923158125878575144>"
                 let roledelete = db.get(`roledeletelimts_${interaction.guild.id}`)
-                if (roledelete === null) roledelete = "<:disable:923158125878575144>"
-                let logschannel = db.get(`acitonslogs_${interaction.guild.id}`)
-                if (logschannel === null) logschannel = "<:disable:923158125878575144>"
-                else logschannel = `<#${logschannel}>`
                 let channelcreatelimts = db.get(`channelcreatelimts_${interaction.guild.id}`)
-                if (channelcreatelimts === null) channelcreatelimts = "<:disable:923158125878575144>"
                 let channeldeletelimts = db.get(`channeldeletelimts_${interaction.guild.id}`)
-                if (channeldeletelimts === null) channeldeletelimts = "<:disable:923158125878575144>"
                 let banlimts = db.get(`banlimts_${interaction.guild.id}`)
-                if (banlimts === null) banlimts = "<:disable:923158125878575144>"
                 let kicklimts = db.get(`kicklimts_${interaction.guild.id}`)
-                if (kicklimts === null) kicklimts = "<:disable:923158125878575144>"
+                let logschannel = db.get(`acitonslogs_${interaction.guild.id}`)
+
+                if (rolelimt) rolelimt = '<:enable:923158125790494761> ' + rolelimt; else rolelimt = "<:disable:923158125878575144>"
+                if (roledelete) roledelete = '<:enable:923158125790494761> ' + roledelete; else roledelete = "<:disable:923158125878575144>"
+                if (channelcreatelimts) channelcreatelimts = '<:enable:923158125790494761> ' + channelcreatelimts; else channelcreatelimts = "<:disable:923158125878575144>"
+                if (channeldeletelimts) channeldeletelimts = '<:enable:923158125790494761> ' + channeldeletelimts; else channeldeletelimts = "<:disable:923158125878575144>"
+                if (banlimts) banlimts = '<:enable:923158125790494761> ' + banlimts; else banlimts = "<:disable:923158125878575144>"
+                if (kicklimts) kicklimts = '<:enable:923158125790494761> ' + kicklimts; else kicklimts = "<:disable:923158125878575144>"
+
+                if (logschannel) logschannel = `<:enable:923158125790494761> <#${logschannel}>`; else logschannel = "<:disable:923158125878575144>"
+
 
                 if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
                         let showembed = new Discord.MessageEmbed()
                                 .setColor('#85db61')
                                 .setTitle('Anti-Nuke Limits:')
                                 .addFields(
-                                        { name: 'Role Create Limits', value: rolelimt, inline: true },
-                                        { name: 'Role Delete Limits', value: roledelete, inline: true },
-                                        { name: 'Channel Create Limits', value: channelcreatelimts, inline: true },
-                                        { name: 'Channel Delete Limits', value: channeldeletelimts, inline: true },
-                                        { name: 'Ban Limits', value: banlimts, inline: true },
-                                        { name: 'Kick Limits', value: kicklimts, inline: true },
-                                        { name: 'Aciton Log Channel', value: logschannel, inline: true },
+                                        { name: 'Role Create Limits', value: '** **' + rolelimt, inline: true },
+                                        { name: 'Role Delete Limits', value: '** **' + roledelete, inline: true },
+                                        { name: 'Channel Create Limits', value: '** **' + channelcreatelimts, inline: true },
+                                        { name: 'Channel Delete Limits', value: '** **' + channeldeletelimts, inline: true },
+                                        { name: 'Ban Limits', value: '** **' + banlimts, inline: true },
+                                        { name: 'Kick Limits', value: '** **' + kicklimts, inline: true },
+                                        { name: 'Aciton Log Channel', value: '** **' + logschannel, inline: true },
                                 )
                         return interaction.reply({
                                 embeds: [showembed]
@@ -47,13 +49,13 @@ module.exports = {
                                 .setColor('#85db61')
                                 .setTitle('Anti-Nuke Limits:')
                                 .addFields(
-                                        { name: 'Role Create Limits', value: rolelimt, inline: true },
-                                        { name: 'Role Delete Limits', value: roledelete, inline: true },
-                                        { name: 'Channel Create Limits', value: channelcreatelimts, inline: true },
-                                        { name: 'Channel Delete Limits', value: channeldeletelimts, inline: true },
-                                        { name: 'Ban Limits', value: banlimts, inline: true },
-                                        { name: 'Kick Limits', value: kicklimts, inline: true },
-                                        { name: 'Aciton Log Channel', value: logschannel, inline: true },
+                                        { name: 'Role Create Limits', value: '** **' + rolelimt, inline: true },
+                                        { name: 'Role Delete Limits', value: '** **' + roledelete, inline: true },
+                                        { name: 'Channel Create Limits', value: '** **' + channelcreatelimts, inline: true },
+                                        { name: 'Channel Delete Limits', value: '** **' + channeldeletelimts, inline: true },
+                                        { name: 'Ban Limits', value: '** **' + banlimts, inline: true },
+                                        { name: 'Kick Limits', value: '** **' + kicklimts, inline: true },
+                                        { name: 'Aciton Log Channel', value: '** **' + logschannel, inline: true },
                                 )
                         return interaction.reply({
                                 embeds: [showembed]
