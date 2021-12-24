@@ -12,12 +12,18 @@ module.exports = {
                 .setRequired(true)),
     async execute(interaction) {
 
+        let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
+        var logs = interaction.options.getChannel('channel')
 
-        let wluser = db.get(`trustedusers_${interaction.guild.id}`).find(find => find.user == interaction.user.id)
-        if (interaction.user.id === interaction.guild.ownerId || interaction.user.id === wluser) {
-
-            var logs = interaction.options.getChannel('channel')
-
+        if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
+            db.set(`acitonslogs_${interaction.guild.id}`, logs.id)
+            let done = new Discord.MessageEmbed()
+                .setColor('#85db61')
+                .setDescription(`<:check:923151545401479179> Well Done Aciton-Logs Channel Has Been Set To <#${logs.id}>`)
+            return interaction.reply({
+                embeds: [done]
+            });
+        } else if (interaction.user.id === interaction.guild.ownerId) {
             db.set(`acitonslogs_${interaction.guild.id}`, logs.id)
             let done = new Discord.MessageEmbed()
                 .setColor('#85db61')
@@ -26,6 +32,7 @@ module.exports = {
                 embeds: [done]
             });
         }
+
 
         let owneronly = new Discord.MessageEmbed()
             .setColor('#f67975')
