@@ -10,7 +10,7 @@ client.on('ready', () => {
         status: 'dnd',
         activities: [{
             type: 'WATCHING',
-            name: 'Your Server',
+            name: 'Your Server | /info',
         }]
     });
     console.log('--------------------------');
