@@ -21,18 +21,25 @@ module.exports = {
         .setDescription('Number Of Limit')
         .setRequired(true)),
 
-  async execute(interaction) {
+  async execute(interaction, client) {
 
     var config = interaction.options.get('config').value
     var num = interaction.options.get('num').value
 
     let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
+    var log = db.get(`acitonslogs_${interaction.guild.id}`)
+
     if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
       if (config === 'setrolecreatelimit') {
         db.set(`rolecreatelimt_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> RoleCreation limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
@@ -40,9 +47,14 @@ module.exports = {
 
       if (config === 'setroledeletelimit') {
         db.set(`roledeletelimts_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> RoleDelete limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
@@ -50,9 +62,14 @@ module.exports = {
 
       if (config === 'setchannelcreatelimit') {
         db.set(`channelcreatelimts_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> ChannelCreation limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
@@ -60,9 +77,14 @@ module.exports = {
 
       if (config === 'setchanneldeletelimit') {
         db.set(`channeldeletelimts_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> ChannelDelete limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
@@ -70,9 +92,14 @@ module.exports = {
 
       if (config === 'setbanlimit') {
         db.set(`banlimts_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> Ban limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
@@ -80,22 +107,34 @@ module.exports = {
 
       if (config === 'setkicklimit') {
         db.set(`kicklimts_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> Kick limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
       }
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
 
-      var log = db.get(`acitonslogs_${interaction.guild.id}`)
-      if (log !== null) log.send(`**${config}** Edited To **${num}** By ${interaction.user.tag}`)
     } else if (interaction.user.id === interaction.guild.ownerId) {
       if (config === 'setrolecreatelimit') {
         db.set(`rolecreatelimt_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> RoleCreation limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
@@ -103,9 +142,14 @@ module.exports = {
 
       if (config === 'setroledeletelimit') {
         db.set(`roledeletelimts_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> RoleDelete limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
@@ -113,9 +157,14 @@ module.exports = {
 
       if (config === 'setchannelcreatelimit') {
         db.set(`channelcreatelimts_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> ChannelCreation limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
@@ -123,9 +172,14 @@ module.exports = {
 
       if (config === 'setchanneldeletelimit') {
         db.set(`channeldeletelimts_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> ChannelDelete limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
@@ -133,9 +187,14 @@ module.exports = {
 
       if (config === 'setbanlimit') {
         db.set(`banlimts_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> Ban limits Has Been Set To ${num}`)
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
@@ -143,16 +202,22 @@ module.exports = {
 
       if (config === 'setkicklimit') {
         db.set(`kicklimts_${interaction.guild.id}`, num)
-        let = new Discord.MessageEmbed()
+        let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> Kick limits Has Been Set To ${num}`)
+          
+      let setted = new Discord.MessageEmbed()
+        .setColor('#85db61')
+        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
         return interaction.reply({
           embeds: [done]
         });
       }
 
-      var log = db.get(`acitonslogs_${interaction.guild.id}`)
-      if (log !== null) log.send(`**${config}** Edited To **${num}** By ${interaction.user.tag}`)
+
+
     }
 
     let owneronly = new Discord.MessageEmbed()

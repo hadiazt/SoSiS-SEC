@@ -10,12 +10,13 @@ module.exports = {
       option.setName('user')
         .setDescription('Mention The User')
         .setRequired(true)),
-  async execute(interaction) {
+  async execute(interaction, client) {
 
     if (interaction.user.id === interaction.guild.ownerId) {
 
       var user = interaction.options.getUser('user')
 
+      var log = db.get(`acitonslogs_${interaction.guild.id}`)
       let database = db.get(`trustedusers_${interaction.guild.id}`)
       if (database && database.find(x => x.user === user.id)) {
         let data = database.find(x => x.user === user.id)
@@ -28,8 +29,10 @@ module.exports = {
         })
 
         db.set(`trustedusers_${interaction.guild.id}`, filter)
-        var log = db.get(`acitonslogs_${interaction.guild.id}`)
-        if (log !== null) log.send(`**${user.tag} Removed From Trusted List`)
+        let addedlog = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **Successfully Removed ${user.tag} From Trusted Users!** `)
+        if (log) client.channels.cache.get(log).send({ embeds: [addedlog] });
 
         let deleted = new Discord.MessageEmbed()
           .setColor('#85db61')

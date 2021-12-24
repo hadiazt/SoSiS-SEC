@@ -10,7 +10,7 @@ module.exports = {
             option.setName('user')
                 .setDescription('Mention The User')
                 .setRequired(true)),
-    async execute(interaction) {
+    async execute(interaction, client) {
 
         if (interaction.user.id === interaction.guild.ownerId) {
 
@@ -21,6 +21,7 @@ module.exports = {
 
             if (user.id === interaction.guild.ownerId) return interaction.reply({ embeds: [owneral] });
 
+            var log = db.get(`acitonslogs_${interaction.guild.id}`)
             let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
             if (trustedusers && trustedusers.find(find => find.user == user.id)) {
                 let existed = new Discord.MessageEmbed()
@@ -34,8 +35,12 @@ module.exports = {
                 user: user.id
             }
             db.push(`trustedusers_${interaction.guild.id}`, data)
-            var log = db.get(`acitonslogs_${interaction.guild.id}`)
-            if (log !== null) log.send(`**Added ${user.tag} To Trusted List!**`)
+
+            let addedlog = new Discord.MessageEmbed()
+                .setColor('#85db61')
+                .setDescription(`<:check:923151545401479179> **${user.tag} Added To Trusted List!**`)
+            if (log) client.channels.cache.get(log).send({ embeds: [addedlog] });
+
             let added = new Discord.MessageEmbed()
                 .setColor('#85db61')
                 .setDescription(`<:check:923151545401479179> **${user.tag} Added To Trusted List!**`)

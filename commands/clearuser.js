@@ -10,8 +10,9 @@ module.exports = {
                         option.setName('user')
                                 .setDescription('Mention The User')
                                 .setRequired(true)),
-        async execute(interaction) {
+        async execute(interaction, client) {
 
+                var log = db.get(`acitonslogs_${interaction.guild.id}`)
                 let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
                 var user = interaction.options.getUser('user')
                 if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
@@ -22,8 +23,11 @@ module.exports = {
                         db.delete(`executer_${interaction.guild.id}_${user.id}_channelcreate`)
                         db.delete(`executer_${interaction.guild.id}_${user.id}_channeldelete`)
 
-                        var log = db.get(`acitonslogs_${interaction.guild.id}`)
-                        if (log !== null) log.send(`Removed ${user.tag} **Warns** By ${interaction.user.tag}`)
+                        let removedwarn = new Discord.MessageEmbed()
+                                .setColor('#85db61')
+                                .setDescription(`<:check:923151545401479179> Removed ${user.tag} **Warns** By ${interaction.user.tag}`)
+                        if (log) client.channels.cache.get(log).send({ embeds: [removedwarn] });
+
 
                         let restor = new Discord.MessageEmbed()
                                 .setColor('#85db61')
@@ -40,8 +44,10 @@ module.exports = {
                         db.delete(`executer_${interaction.guild.id}_${user.id}_channelcreate`)
                         db.delete(`executer_${interaction.guild.id}_${user.id}_channeldelete`)
 
-                        var log = db.get(`acitonslogs_${interaction.guild.id}`)
-                        if (log !== null) log.send(`Removed ${user.tag} **Warns** By ${interaction.user.tag}`)
+                        let removedwarn = new Discord.MessageEmbed()
+                                .setColor('#85db61')
+                                .setDescription(`<:check:923151545401479179> Removed ${user.tag} **Warns** By ${interaction.user.tag}`)
+                        if (log) client.channels.cache.get(log).send({ embeds: [removedwarn] });
 
                         let restor = new Discord.MessageEmbed()
                                 .setColor('#85db61')
