@@ -9,66 +9,52 @@ module.exports = {
         async execute(interaction) {
 
                 let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
-                if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
-                        let rolelimt = db.get(`rolecreatelimt_${interaction.guild.id}`)
-                        if (rolelimt === null) rolelimt = "<:disable:923158125878575144>"
-                        let roledelete = db.get(`roledeletelimts_${interaction.guild.id}`)
-                        if (roledelete === null) roledelete = "<:disable:923158125878575144>"
-                        let logschannel = db.get(`acitonslogs_${interaction.guild.id}`)
-                        let logschannel2 = db.get(`acitonslogs_${interaction.guild.id}`)
-                        if (logschannel === null) logschannel = "<:disable:923158125878575144>"
-                        else logschannel = `<#${logschannel2}>`
-                        let channelcreatelimts = db.get(`channelcreatelimts_${interaction.guild.id}`)
-                        if (channelcreatelimts === null) channelcreatelimts = "<:disable:923158125878575144>"
-                        let channeldeletelimts = db.get(`channeldeletelimts_${interaction.guild.id}`)
-                        if (channeldeletelimts === null) channeldeletelimts = "<:disable:923158125878575144>"
-                        let banlimts = db.get(`banlimts_${interaction.guild.id}`)
-                        if (banlimts === null) banlimts = "<:disable:923158125878575144>"
-                        let kicklimts = db.get(`kicklimts_${interaction.guild.id}`)
-                        if (kicklimts === null) kicklimts = "<:disable:923158125878575144>"
 
+                let rolelimt = db.get(`rolecreatelimt_${interaction.guild.id}`)
+                if (rolelimt === null) rolelimt = "<:disable:923158125878575144>"
+                let roledelete = db.get(`roledeletelimts_${interaction.guild.id}`)
+                if (roledelete === null) roledelete = "<:disable:923158125878575144>"
+                let logschannel = db.get(`acitonslogs_${interaction.guild.id}`)
+                if (logschannel === null) logschannel = "<:disable:923158125878575144>"
+                else logschannel = `<#${logschannel}>`
+                let channelcreatelimts = db.get(`channelcreatelimts_${interaction.guild.id}`)
+                if (channelcreatelimts === null) channelcreatelimts = "<:disable:923158125878575144>"
+                let channeldeletelimts = db.get(`channeldeletelimts_${interaction.guild.id}`)
+                if (channeldeletelimts === null) channeldeletelimts = "<:disable:923158125878575144>"
+                let banlimts = db.get(`banlimts_${interaction.guild.id}`)
+                if (banlimts === null) banlimts = "<:disable:923158125878575144>"
+                let kicklimts = db.get(`kicklimts_${interaction.guild.id}`)
+                if (kicklimts === null) kicklimts = "<:disable:923158125878575144>"
+
+                if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
                         let showembed = new Discord.MessageEmbed()
                                 .setColor('#85db61')
                                 .setTitle('Anti-Nuke Limits:')
-                                .addField('Role Create Limits', rolelimt, true)
-                                .addField('Role Delete Limits', roledelete, true)
-                                .addField(`Channel Create Limits`, channelcreatelimts, true)
-                                .addField(`Channel Delete Limits`, channeldeletelimts, true)
-                                .addField(`Ban Limits`, banlimts, true)
-                                .addField(`Kick Limits`, kicklimts, true)
-                                .addField(`Aciton Log Channel`, logschannel, true)
+                                .addFields(
+                                        { name: 'Role Create Limits', value: rolelimt, inline: true },
+                                        { name: 'Role Delete Limits', value: roledelete, inline: true },
+                                        { name: 'Channel Create Limits', value: channelcreatelimts, inline: true },
+                                        { name: 'Channel Delete Limits', value: channeldeletelimts, inline: true },
+                                        { name: 'Ban Limits', value: banlimts, inline: true },
+                                        { name: 'Kick Limits', value: kicklimts, inline: true },
+                                        { name: 'Aciton Log Channel', value: logschannel, inline: true },
+                                )
                         return interaction.reply({
                                 embeds: [showembed]
                         });
                 } else if (interaction.user.id === interaction.guild.ownerId) {
-                        let rolelimt = db.get(`rolecreatelimt_${interaction.guild.id}`)
-                        if (rolelimt === null) rolelimt = "<:disable:923158125878575144>"
-                        let roledelete = db.get(`roledeletelimts_${interaction.guild.id}`)
-                        if (roledelete === null) roledelete = "<:disable:923158125878575144>"
-                        let logschannel = db.get(`acitonslogs_${interaction.guild.id}`)
-                        let logschannel2 = db.get(`acitonslogs_${interaction.guild.id}`)
-                        if (logschannel === null) logschannel = "<:disable:923158125878575144>"
-                        else logschannel = `<#${logschannel2}>`
-                        let channelcreatelimts = db.get(`channelcreatelimts_${interaction.guild.id}`)
-                        if (channelcreatelimts === null) channelcreatelimts = "<:disable:923158125878575144>"
-                        let channeldeletelimts = db.get(`channeldeletelimts_${interaction.guild.id}`)
-                        if (channeldeletelimts === null) channeldeletelimts = "<:disable:923158125878575144>"
-                        let banlimts = db.get(`banlimts_${interaction.guild.id}`)
-                        if (banlimts === null) banlimts = "<:disable:923158125878575144>"
-                        let kicklimts = db.get(`kicklimts_${interaction.guild.id}`)
-                        if (kicklimts === null) kicklimts = "<:disable:923158125878575144>"
-
                         let showembed = new Discord.MessageEmbed()
                                 .setColor('#85db61')
-
                                 .setTitle('Anti-Nuke Limits:')
-                                .addField('Role Create Limits', rolelimt, true)
-                                .addField('Role Delete Limits', roledelete, true)
-                                .addField(`Channel Create Limits`, channelcreatelimts, true)
-                                .addField(`Channel Delete Limits`, channeldeletelimts, true)
-                                .addField(`Ban Limits`, banlimts, true)
-                                .addField(`Kick Limits`, kicklimts, true)
-                                .addField(`Aciton Log Channel`, logschannel, true)
+                                .addFields(
+                                        { name: 'Role Create Limits', value: rolelimt, inline: true },
+                                        { name: 'Role Delete Limits', value: roledelete, inline: true },
+                                        { name: 'Channel Create Limits', value: channelcreatelimts, inline: true },
+                                        { name: 'Channel Delete Limits', value: channeldeletelimts, inline: true },
+                                        { name: 'Ban Limits', value: banlimts, inline: true },
+                                        { name: 'Kick Limits', value: kicklimts, inline: true },
+                                        { name: 'Aciton Log Channel', value: logschannel, inline: true },
+                                )
                         return interaction.reply({
                                 embeds: [showembed]
                         })
