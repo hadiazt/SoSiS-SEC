@@ -1,11 +1,11 @@
 const Discord = require('discord.js')
-const client = new Discord.Client({ intents: 14079, disableMentions: 'everyone', })
+const client = new Discord.Client({ intents: '14079', disableMentions: 'everyone', })
 const db = require('quick.db')
 const { readdirSync } = require('fs');
 const CONFIG = require('./data/config.json')
 client.login(CONFIG.TOKEN)
 client.commands = new Discord.Collection();
-const GIF = CONFIG.GIFS.Math.floor(Math.random() * CONFIG.GIFS.length);
+const GIF = CONFIG.GIFS[Math.floor(CONFIG.GIFS.length * Math.random())];
 
 client.on('ready', () => {
     client.user.setPresence({
