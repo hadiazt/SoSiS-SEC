@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Discord = require("discord.js")
 const db = require("quick.db")
+const Canvas = require('canvas');
+Canvas.registerFont('./data/font/OpenSans-SemiBoldItalic.ttf', { family: 'OpenSans-SemiBoldItalic' })
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -35,10 +37,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> RoleCreation limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -50,10 +69,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> RoleDelete limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -65,10 +101,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> ChannelCreation limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -80,10 +133,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> ChannelDelete limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -95,10 +165,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> Ban limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -110,10 +197,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> Kick limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -130,10 +234,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> RoleCreation limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -145,10 +266,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> RoleDelete limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -160,10 +298,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> ChannelCreation limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -175,10 +330,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> ChannelDelete limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -190,10 +362,27 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> Ban limits Has Been Set To ${num}`)
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
@@ -205,11 +394,28 @@ module.exports = {
         let done = new Discord.MessageEmbed()
           .setColor('#85db61')
           .setDescription(`<:check:923151545401479179> Kick limits Has Been Set To ${num}`)
-          
-      let setted = new Discord.MessageEmbed()
-        .setColor('#85db61')
-        .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
-      if (log) client.channels.cache.get(log).send({ embeds: [setted] });
+
+        const canvas = Canvas.createCanvas(1242, 703);
+        const context = canvas.getContext('2d');
+        const background = await Canvas.loadImage(`./data/bg.png`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        context.font = '100px OpenSans-SemiBoldItalic';
+        context.fillStyle = 'black';
+       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.beginPath();
+        context.arc(250, 250, 200, 0, 2 * Math.PI);
+        context.clip();
+        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+        context.drawImage(profile, 50, 50, 400, 400);
+        const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+        let setted = new Discord.MessageEmbed()
+          .setColor('#85db61')
+          .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
+          .setImage('attachment://set.png');
+
+
+        if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
 
         return interaction.reply({
           embeds: [done]
