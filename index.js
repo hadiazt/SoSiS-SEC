@@ -3,6 +3,7 @@ const client = new Discord.Client({ intents: 14079, disableMentions: 'everyone',
 const db = require('quick.db')
 const { readdirSync } = require('fs');
 const CONFIG = require('./config.json')
+client.login(CONFIG.TOKEN)
 client.commands = new Discord.Collection();
 
 client.on('ready', () => {
@@ -325,6 +326,3 @@ client.on("guildMemberRemove", async member => {
 
     }
 })
-
-
-client.login(CONFIG.TOKEN)
