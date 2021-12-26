@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Discord = require("discord.js")
 const db = require("quick.db")
+const Canvas = require('canvas');
+Canvas.registerFont('./data/font/OpenSans-SemiBoldItalic.ttf', { family: 'OpenSans-SemiBoldItalic' })
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,8 +15,8 @@ module.exports = {
     async execute(interaction, client) {
 
         if (interaction.user.id === interaction.guild.ownerId) {
-
             var user = interaction.options.getUser('user')
+
             var owneral = new Discord.MessageEmbed()
                 .setColor('#85db61')
                 .setDescription(`**GUILD Owners Are In WhiteList By Default**`)
@@ -36,19 +38,36 @@ module.exports = {
             }
             db.push(`trustedusers_${interaction.guild.id}`, data)
 
+            const canvas = Canvas.createCanvas(1242, 703);
+            const context = canvas.getContext('2d');
+            const background = await Canvas.loadImage(`./data/bg.png`);
+            context.drawImage(background, 0, 0, canvas.width, canvas.height);
+            context.font = '100px OpenSans-SemiBoldItalic';
+            context.fillStyle = 'black';
+            context.fillText(user.tag, 720, 270, 300, 250);
+            context.fillText(`ADDED TO TRUST LIST`, 670, 640, 300, 250);
+            context.beginPath();
+            context.arc(250, 250, 200, 0, 2 * Math.PI);
+            context.clip();
+            const profile = await Canvas.loadImage(user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+            context.drawImage(profile, 50, 50, 400, 400);
+            const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "trustadded.png");
+
             let addedlog = new Discord.MessageEmbed()
                 .setColor('#85db61')
                 .setDescription(`<:check:923151545401479179> **${user.tag} Added To Trusted List!**`)
-            if (log) client.channels.cache.get(log).send({ embeds: [addedlog] });
+                .setImage('attachment://trustadded.png');
+            if (log) client.channels.cache.get(log).send({ embeds: [addedlog], files: [wladdedimg] });
+
+
 
             let added = new Discord.MessageEmbed()
                 .setColor('#85db61')
                 .setDescription(`<:check:923151545401479179> **${user.tag} Added To Trusted List!**`)
 
-            return interaction.reply({
-                embeds: [added]
-            });
+            return interaction.reply({ embeds: [added] });
         }
+
         let owneronly = new Discord.MessageEmbed()
             .setColor('#f67975')
             .setTitle(`You Can't Use This Command!`)
