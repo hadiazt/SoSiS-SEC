@@ -170,8 +170,8 @@ client.on("channelCreate", async channel => {
     }).then(audit => audit.entries.first())
 
     const entry = user.executor
-    let trustedusers = db.get(`trustedusers_${role.guild.id}`)
-    let logs = db.get(`acitonslogs_${role.guild.id}`)
+    let trustedusers = db.get(`trustedusers_${channel.guild.id}`)
+    let logs = db.get(`acitonslogs_${channel.guild.id}`)
 
     if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
         if (logs) {
@@ -220,8 +220,8 @@ client.on("channelDelete", async channel => {
     }).then(audit => audit.entries.first())
 
     const entry = user.executor
-    let trustedusers = db.get(`trustedusers_${role.guild.id}`)
-    let logs = db.get(`acitonslogs_${role.guild.id}`)
+    let trustedusers = db.get(`trustedusers_${channel.guild.id}`)
+    let logs = db.get(`acitonslogs_${channel.guild.id}`)
 
     if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
         if (logs) {
@@ -276,8 +276,8 @@ client.on("guildMemberRemove", async member => {
         const entry = entry2.executor;
 
         if (entry.id !== client.user.id) {
-            let trustedusers = db.get(`trustedusers_${role.guild.id}`)
-            let logs = db.get(`acitonslogs_${role.guild.id}`)
+            let trustedusers = db.get(`trustedusers_${member.guild.id}`)
+            let logs = db.get(`acitonslogs_${member.guild.id}`)
 
             if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
                 if (logs) {
@@ -334,8 +334,8 @@ client.on("guildMemberRemove", async member => {
         const entry = entry2.executor;
 
         if (entry.id !== client.user.id) {
-            let trustedusers = db.get(`trustedusers_${role.guild.id}`)
-            let logs = db.get(`acitonslogs_${role.guild.id}`)
+            let trustedusers = db.get(`trustedusers_${member.guild.id}`)
+            let logs = db.get(`acitonslogs_${member.guild.id}`)
 
             if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
                 if (logs) {
