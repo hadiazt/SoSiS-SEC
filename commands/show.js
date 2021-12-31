@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Discord = require("discord.js")
 const db = require("quick.db")
+const { OWNER } = require('../data/config.json')
 
 module.exports = {
         data: new SlashCommandBuilder()

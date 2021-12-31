@@ -3,6 +3,7 @@ const Discord = require("discord.js")
 const db = require("quick.db")
 const Canvas = require('canvas');
 Canvas.registerFont('./data/font/OpenSans-SemiBoldItalic.ttf', { family: 'OpenSans-SemiBoldItalic' })
+const { OWNER } = require('../data/config.json')
 
 module.exports = {
   data: new SlashCommandBuilder()
