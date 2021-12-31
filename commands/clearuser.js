@@ -36,7 +36,7 @@ module.exports = {
                         context.beginPath()
                         context.arc(250, 250, 200, 0, 2 * Math.PI);
                         context.clip();
-                        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+                        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'png', size: 2048 }));
                         context.drawImage(profile, 50, 50, 400, 400);
                         const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "clear.png");
 
@@ -73,7 +73,7 @@ module.exports = {
                         context.beginPath();
                         context.arc(250, 250, 200, 0, 2 * Math.PI);
                         context.clip();
-                        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'jpg', size: 2048 }));
+                        const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'png', size: 2048 }));
                         context.drawImage(profile, 50, 50, 400, 400);
                         const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "clear.png");
 
