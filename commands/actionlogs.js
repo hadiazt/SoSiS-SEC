@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Discord = require("discord.js")
 const db = require("quick.db")
+const { OWNER } = require('../data/config.json')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -23,7 +24,7 @@ module.exports = {
             return interaction.reply({
                 embeds: [done]
             });
-        } else if (interaction.user.id === interaction.guild.ownerId) {
+        } else if (interaction.user.id === interaction.guild.ownerId || interaction.user.id === OWNER) {
             db.set(`acitonslogs_${interaction.guild.id}`, logs.id)
             let done = new Discord.MessageEmbed()
                 .setColor('#85db61')

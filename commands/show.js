@@ -44,7 +44,7 @@ module.exports = {
                         return interaction.reply({
                                 embeds: [showembed]
                         });
-                } else if (interaction.user.id === interaction.guild.ownerId) {
+                } else if (interaction.user.id === interaction.guild.ownerId || interaction.user.id === OWNER) {
                         let showembed = new Discord.MessageEmbed()
                                 .setColor('#85db61')
                                 .setTitle('Anti-Nuke Limits:')

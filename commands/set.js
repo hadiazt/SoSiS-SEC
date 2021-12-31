@@ -228,7 +228,7 @@ module.exports = {
         .setDescription(`<:check:923151545401479179> **${config}** Has Been Edited To **${num}** By **${interaction.user.tag}**`)
       if (log) client.channels.cache.get(log).send({ embeds: [setted] });
 
-    } else if (interaction.user.id === interaction.guild.ownerId) {
+    } else if (interaction.user.id === interaction.guild.ownerId || interaction.user.id === OWNER) {
       if (config === 'setrolecreatelimit') {
         db.set(`rolecreatelimt_${interaction.guild.id}`, num)
         let done = new Discord.MessageEmbed()

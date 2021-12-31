@@ -3,6 +3,7 @@ const Discord = require("discord.js")
 const db = require("quick.db")
 const Canvas = require('canvas');
 Canvas.registerFont('./data/font/OpenSans-SemiBoldItalic.ttf', { family: 'OpenSans-SemiBoldItalic' })
+const { OWNER } = require('../data/config.json')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -14,7 +15,7 @@ module.exports = {
         .setRequired(true)),
   async execute(interaction, client) {
 
-    if (interaction.user.id === interaction.guild.ownerId) {
+    if (interaction.user.id === interaction.guild.ownerId || interaction.user.id === OWNER) {
 
       var user = interaction.options.getUser('user')
 
