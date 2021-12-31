@@ -21,19 +21,19 @@ client.on('ready', () => {
 
 // --------------------------------------------
 client.on('guildCreate', async guild => {
-    let JoinEmbed = new MessageEmbed()
+    let JoinEmbed = new Discord.MessageEmbed()
         .setDescription('**<:space:874678195843125278><:right:874690882417360986> A New Guild Has Been Submited**')
         .setAuthor({ name: guild.name, iconURL: guild.iconURL({ dynamic: true }) })
         .setColor('#0fe694')
-    client.channels.cache.get(config.BOT_LOG).send({ embeds: [JoinEmbed] });
+    client.channels.cache.get(CONFIG.BOT_LOG).send({ embeds: [JoinEmbed] });
 });
 // --------------------------------------------
 client.on('guildDelete', async guild => {
-    let LeftEmbed = new MessageEmbed()
+    let LeftEmbed = new Discord.MessageEmbed()
         .setDescription('**<:space:874678195843125278><:right:874690882417360986> A Guild Has Been Removed **')
         .setAuthor({ name: guild.name, iconURL: guild.iconURL({ dynamic: true }) })
         .setColor('#ff0000')
-    client.channels.cache.get(config.BOT_LOG).send({ embeds: [LeftEmbed] });
+    client.channels.cache.get(CONFIG.BOT_LOG).send({ embeds: [LeftEmbed] });
 });
 // --------------------------------------------
 
