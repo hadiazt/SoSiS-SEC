@@ -89,7 +89,7 @@ client.on("roleCreate", async role => {
     let author = db.get(`executer_${role.guild.id}_${entry.id}_rolecreate`)
     let limts = db.get(`rolecreatelimt_${role.guild.id}`)
 
-    if (limts === null) {
+    if (limts === null && logs) {
         let nolimit = new Discord.MessageEmbed()
             .setColor('#f67975')
             .setTitle(`<:ignore:923151545569267752> ${entry.tag} Created A Role But No Limit Found To Punish`)
@@ -139,7 +139,7 @@ client.on("roleDelete", async role => {
     let author = db.get(`executer_${role.guild.id}_${entry.id}_roledelete`)
     let limts = db.get(`roledeletelimt_${role.guild.id}`)
 
-    if (limts === null) {
+    if (limts === null && logs) {
         let nolimit = new Discord.MessageEmbed()
             .setColor('#f67975')
             .setTitle(`<:ignore:923151545569267752> ${entry.tag} Deleted A Role But No Limit Found To Punish`)
@@ -188,7 +188,7 @@ client.on("channelCreate", async channel => {
     let author = db.get(`executer_${channel.guild.id}_${entry.id}_channelcreate`)
     let limts = db.get(`channelcreatelimts_${channel.guild.id}`)
 
-    if (limts === null) {
+    if (limts === null && logs && logs) {
         let nolimit = new Discord.MessageEmbed()
             .setColor('#f67975')
             .setTitle(`<:ignore:923151545569267752> ${entry.tag} Created A Channel But No Limit Found To Punish`)
@@ -238,7 +238,7 @@ client.on("channelDelete", async channel => {
     let author = db.get(`executer_${channel.guild.id}_${entry.id}_channeldelete`)
     let limts = db.get(`channeldeletelimts_${channel.guild.id}`)
 
-    if (limts === null) {
+    if (limts === null && logs) {
         let nolimit = new Discord.MessageEmbed()
             .setColor('#f67975')
             .setTitle(`<:ignore:923151545569267752> ${entry.tag} Deleted A Channel But No Limit Found To Punish`)
@@ -294,7 +294,7 @@ client.on("guildMemberRemove", async member => {
             let author = db.get(`executer_${member.guild.id}_${entry.id}_kicklimts`)
             let limts = db.get(`kicklimts_${member.guild.id}`)
 
-            if (limts === null) {
+            if (limts === null && logs) {
                 let nolimit = new Discord.MessageEmbed()
                     .setColor('#f67975')
                     .setTitle(`<:ignore:923151545569267752> ${entry.tag} Kicked An Member But No Limit Found To Punish`)
@@ -352,7 +352,7 @@ client.on("guildMemberRemove", async member => {
             let author = db.get(`executer_${member.guild.id}_${entry.id}_banlimts`)
             let limts = db.get(`banlimts_${member.guild.id}`)
 
-            if (limts === null) {
+            if (limts === null && logs) {
                 let nolimit = new Discord.MessageEmbed()
                     .setColor('#f67975')
                     .setTitle(`<:ignore:923151545569267752> ${entry.tag} Banned A Member But No Limit Found To Punish`)
