@@ -12,13 +12,30 @@ client.on('ready', () => {
         status: 'dnd',
         activities: [{
             type: 'WATCHING',
-            name: 'Your Server | /info',
+            name: `${client.guilds.cache.size} GUILDS | /info`,
         }]
     });
     console.log('--------------------------');
     console.log(`CONNECTED TO : ${client.user.tag}`);
 });
 
+// --------------------------------------------
+client.on('guildCreate', async guild => {
+    let JoinEmbed = new MessageEmbed()
+        .setDescription('**<:space:874678195843125278><:right:874690882417360986> A New Guild Has Been Submited**')
+        .setAuthor({ name: guild.name, iconURL: guild.iconURL({ dynamic: true }) })
+        .setColor('#0fe694')
+    client.channels.cache.get(config.BOT_LOG).send({ embeds: [JoinEmbed] });
+});
+// --------------------------------------------
+client.on('guildDelete', async guild => {
+    let LeftEmbed = new MessageEmbed()
+        .setDescription('**<:space:874678195843125278><:right:874690882417360986> A Guild Has Been Removed **')
+        .setAuthor({ name: guild.name, iconURL: guild.iconURL({ dynamic: true }) })
+        .setColor('#ff0000')
+    client.channels.cache.get(config.BOT_LOG).send({ embeds: [LeftEmbed] });
+});
+// --------------------------------------------
 
 client.commands = new Discord.Collection();
 const commandFiles = readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -29,6 +46,7 @@ for (const file of commandFiles) {
     console.log(command.data.name + ' LOADED');
 }
 
+// --------------------------------------------
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
@@ -40,6 +58,7 @@ client.on('interactionCreate', async interaction => {
         client.channels.cache.get(CONFIG.ACTION).send('```\n' + `${interaction.commandName} Triggerd In ${interaction.guild.name} | ${interaction.channel.name} By ${interaction.user.tag}` + '\n```')
     } catch (error) {
         console.error(error);
+        client.channels.cache.get(CONFIG.ERROR).send('```\n' + error + '\n```')
         return interaction.reply({ content: `There was an error while executing this command!\nAsk Developers In : ${CONFIG.supportserver}`, ephemeral: true });
     }
 });
@@ -94,6 +113,8 @@ client.on("roleCreate", async role => {
 
 });
 
+// --------------------------------------------
+
 client.on("roleDelete", async role => {
     const user = await role.guild.fetchAuditLogs({
         type: 'ROLE_DELETE'
@@ -140,6 +161,8 @@ client.on("roleDelete", async role => {
         .setImage(GIF)
     client.channels.cache.get(logs).send(logsembed)
 });
+
+// --------------------------------------------
 
 client.on("channelCreate", async channel => {
     const user = await channel.guild.fetchAuditLogs({
@@ -189,6 +212,8 @@ client.on("channelCreate", async channel => {
 
 });
 
+// --------------------------------------------
+
 client.on("channelDelete", async channel => {
     const user = await channel.guild.fetchAuditLogs({
         type: 'CHANNEL_DELETE'
@@ -236,6 +261,8 @@ client.on("channelDelete", async channel => {
     return client.channels.cache.get(logs).send({ embeds: [logsembed] });
 });
 
+// --------------------------------------------
+
 client.on("guildMemberRemove", async member => {
     const entry1 = await member.guild
         .fetchAuditLogs()
@@ -248,48 +275,51 @@ client.on("guildMemberRemove", async member => {
             .then(audit => audit.entries.first());
         const entry = entry2.executor;
 
-        let trustedusers = db.get(`trustedusers_${role.guild.id}`)
-        let logs = db.get(`acitonslogs_${role.guild.id}`)
+        if (entry.id !== client.user.id) {
+            let trustedusers = db.get(`trustedusers_${role.guild.id}`)
+            let logs = db.get(`acitonslogs_${role.guild.id}`)
 
-        if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
-            if (logs) {
-                let trustedac = new Discord.MessageEmbed()
-                    .setColor('#85db61')
-                    .setTitle(`<:check:923151545401479179> ${entry.tag} Kicked An Member But He/She Is In Trusted Users`)
-                return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+            if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
+                if (logs) {
+                    let trustedac = new Discord.MessageEmbed()
+                        .setColor('#85db61')
+                        .setTitle(`<:check:923151545401479179> ${entry.tag} Kicked An Member But He/She Is In Trusted Users`)
+                    return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+                }
+            }
+
+            let author = db.get(`executer_${member.guild.id}_${entry.id}_kicklimts`)
+            let limts = db.get(`kicklimts_${member.guild.id}`)
+
+            if (limts === null) {
+                let nolimit = new Discord.MessageEmbed()
+                    .setColor('#f67975')
+                    .setTitle(`<:ignore:923151545569267752> ${entry.tag} Kicked An Member But No Limit Found To Punish`)
+                    .setImage(GIF)
+                return client.channels.cache.get(logs).send({ embeds: [nolimit] });
+            }
+
+            if (author >= limts) {
+                db.delete(`executer_${member.guild.id}_${entry.id}_kicklimts`)
+                role.guild.members.ban(entry.id)
+                let logsembed = new Discord.MessageEmbed()
+                    .setColor('#00008b')
+                    .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Kick Limits]`)
+                    .setImage(GIF)
+                return client.channels.cache.get(logs).send({ embeds: [logsembed] });
             }
         }
 
-        let author = db.get(`executer_${member.guild.id}_${entry.id}_kicklimts`)
-        let limts = db.get(`kicklimts_${member.guild.id}`)
-
-        if (limts === null) {
-            let nolimit = new Discord.MessageEmbed()
-                .setColor('#f67975')
-                .setTitle(`<:ignore:923151545569267752> ${entry.tag} Kicked An Member But No Limit Found To Punish`)
-                .setImage(GIF)
-            return client.channels.cache.get(logs).send({ embeds: [nolimit] });
-        }
-
-        if (author >= limts) {
-            db.delete(`executer_${member.guild.id}_${entry.id}_kicklimts`)
-            role.guild.members.ban(entry.id)
-            let logsembed = new Discord.MessageEmbed()
-                .setColor('#00008b')
-                .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Kick Limits]`)
-                .setImage(GIF)
-            return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-        }
-
+        db.add(`executer_${member.guild.id}_${entry.id}_kicklimts`, 1)
+        let logsembed = new Discord.MessageEmbed()
+            .setColor('RED')
+            .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Kicking Memeber [${author || 0} /${limts || 0}]`)
+            .setImage(GIF)
+        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
     }
-    db.add(`executer_${member.guild.id}_${entry.id}_kicklimts`, 1)
-    let logsembed = new Discord.MessageEmbed()
-        .setColor('RED')
-        .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Kicking Memeber [${author || 0} /${limts || 0}]`)
-        .setImage(GIF)
-    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-
 })
+
+// --------------------------------------------
 
 client.on("guildMemberRemove", async member => {
     const entry1 = await member.guild
@@ -303,45 +333,48 @@ client.on("guildMemberRemove", async member => {
             .then(audit => audit.entries.first());
         const entry = entry2.executor;
 
-        let trustedusers = db.get(`trustedusers_${role.guild.id}`)
-        let logs = db.get(`acitonslogs_${role.guild.id}`)
+        if (entry.id !== client.user.id) {
+            let trustedusers = db.get(`trustedusers_${role.guild.id}`)
+            let logs = db.get(`acitonslogs_${role.guild.id}`)
 
-        if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
-            if (logs) {
-                let trustedac = new Discord.MessageEmbed()
-                    .setColor('#85db61')
-                    .setTitle(`<:check:923151545401479179> ${entry.tag} Banned An Member But He/She Is In Trusted Users`)
-                return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+            if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
+                if (logs) {
+                    let trustedac = new Discord.MessageEmbed()
+                        .setColor('#85db61')
+                        .setTitle(`<:check:923151545401479179> ${entry.tag} Banned An Member But He/She Is In Trusted Users`)
+                    return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+                }
             }
-        }
 
-        let author = db.get(`executer_${member.guild.id}_${entry.id}_banlimts`)
-        let limts = db.get(`banlimts_${member.guild.id}`)
+            let author = db.get(`executer_${member.guild.id}_${entry.id}_banlimts`)
+            let limts = db.get(`banlimts_${member.guild.id}`)
 
-        if (limts === null) {
-            let nolimit = new Discord.MessageEmbed()
-                .setColor('#f67975')
-                .setTitle(`<:ignore:923151545569267752> ${entry.tag} Banned A Member But No Limit Found To Punish`)
-                .setImage(GIF)
-            return client.channels.cache.get(logs).send({ embeds: [nolimit] });
-        }
+            if (limts === null) {
+                let nolimit = new Discord.MessageEmbed()
+                    .setColor('#f67975')
+                    .setTitle(`<:ignore:923151545569267752> ${entry.tag} Banned A Member But No Limit Found To Punish`)
+                    .setImage(GIF)
+                return client.channels.cache.get(logs).send({ embeds: [nolimit] });
+            }
 
-        if (author >= limts) {
-            db.delete(`executer_${member.guild.id}_${entry.id}_banlimts`)
-            role.guild.members.ban(entry.id)
+            if (author >= limts) {
+                db.delete(`executer_${member.guild.id}_${entry.id}_banlimts`)
+                role.guild.members.ban(entry.id)
+                let logsembed = new Discord.MessageEmbed()
+                    .setColor('#00008b')
+                    .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Ban Limits]`)
+                    .setImage(GIF)
+                return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+            }
+
+            db.add(`executer_${member.guild.id}_${entry.id}_banlimts`, 1)
             let logsembed = new Discord.MessageEmbed()
-                .setColor('#00008b')
-                .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Ban Limits]`)
+                .setColor('RED')
+                .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Banning Member [${author || 0} /${limts || 0}]`)
                 .setImage(GIF)
             return client.channels.cache.get(logs).send({ embeds: [logsembed] });
         }
-
-        db.add(`executer_${member.guild.id}_${entry.id}_banlimts`, 1)
-        let logsembed = new Discord.MessageEmbed()
-            .setColor('RED')
-            .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Banning Member [${author || 0} /${limts || 0}]`)
-            .setImage(GIF)
-        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-
     }
 })
+
+// --------------------------------------------
