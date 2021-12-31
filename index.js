@@ -8,13 +8,16 @@ client.commands = new Discord.Collection();
 const GIF = CONFIG.GIFS[Math.floor(CONFIG.GIFS.length * Math.random())];
 
 client.on('ready', () => {
-    client.user.setPresence({
-        status: 'dnd',
-        activities: [{
-            type: 'WATCHING',
-            name: `${client.guilds.cache.size} GUILDS | /info`,
-        }]
-    });
+    setInterval(() => {
+        client.user.setPresence({
+            status: 'dnd',
+            activities: [{
+                type: 'WATCHING',
+                name: `${client.guilds.cache.size} GUILDS | /info`,
+            }]
+        });
+    }, 60000);
+
     console.log('--------------------------');
     console.log(`CONNECTED TO : ${client.user.tag}`);
 });
