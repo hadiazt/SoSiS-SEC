@@ -1,7 +1,9 @@
 {
-    "TOKEN": "ODE5ODgzMDc4OTM0NTkzNTQ2.YEtFng.0bKqnohRyNZwBaZs6StkQlQLHz4",
-    "ID": "819883078934593546",
+    "TOKEN": "NzgwNzAzNjk0ODg2MDEwOTAy.X7y8-Q.Q-8ToKI9UvYPMEu09_rsULbq5lk",
+    "ID": "780703694886010902",
     "ACTION": "879418338604884049",
+    "JOIN": "879420520351805511",
+    "ERROR":"879427034558922802",
     "supportserver": "https://discord.gg/6vhPVYkNU9",
     "INV": "https://discord.com/api/oauth2/authorize?client_id=780703694886010902&permissions=8&scope=bot%20applications.commands",
     "GIFS": [
