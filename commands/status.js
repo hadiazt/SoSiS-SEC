@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Discord = require("discord.js")
+var os = require('os-utils');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -24,39 +25,21 @@ module.exports = {
         const memoryData = process.memoryUsage()
 
 
-        var startTime = process.hrtime()
-        var startUsage = process.cpuUsage()
-        var now = Date.now()
-        while (Date.now() - now < 500)
-            var elapTime = process.hrtime(startTime)
-        var elapUsage = process.cpuUsage(startUsage)
-        var elapTimeMS = secNSec2ms(elapTime)
-        var elapUserMS = secNSec2ms(elapUsage.user)
-        var elapSystMS = secNSec2ms(elapUsage.system)
-        var cpuPercent = Math.round(100 * (elapUserMS + elapSystMS) / elapTimeMS)
-        function secNSec2ms(secNSec) {
-            if (Array.isArray(secNSec)) {
-                return secNSec[0] * 1000 + secNSec[1] / 1000000;
-            }
-            return secNSec / 1000;
-        }
-
-
         var MemberCount = 0;
         client.guilds.cache.forEach(Member => {
             MemberCount += Member.memberCount
         })
-
-        const embed = new Discord.MessageEmbed()
-            .setTitle(`${client.user.username} Status`)
-            .setColor('#85db61')
-            .setDescription(`
+        os.cpuUsage(function (v) {
+            const embed = new Discord.MessageEmbed()
+                .setTitle(`${client.user.username} Status`)
+                .setColor('#85db61')
+                .setDescription(`
 <:Latency:923592402067918919> **Latency :** ${client.ws.ping}ms
 <:Uptime:923592402302803998> **Uptime :** ${format(uptime)}
 
 <:Resources:923592402256662558> **Resources**
 <:space:874678195843125278> <:ram:923594665431793694> **RAM :** ${formatMemoryUsage(memoryData.heapUsed)}
-<:space:874678195843125278> <:cpu:923592401820463136> **CPU :** ${cpuPercent}%
+<:space:874678195843125278> <:cpu:923592401820463136> **CPU :** ${v}%
 
 <:Size:923592402411876372> **Size**
 <:space:874678195843125278> <:guild:923594665683456060> **Servers :** ${client.guilds.cache.size}
@@ -65,6 +48,7 @@ module.exports = {
         return interaction.reply({
             embeds: [embed]
         });
+    })
 
 
     },
