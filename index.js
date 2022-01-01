@@ -100,11 +100,13 @@ client.on("roleCreate", async role => {
     if (author >= limts) {
         db.delete(`executer_${role.guild.id}_${entry.id}_rolecreate`)
         role.guild.members.ban(entry.id)
-        let logsembed = new Discord.MessageEmbed()
-            .setColor('#00008b')
-            .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Roles Create Limits]`)
-            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+        if (logs) {
+            let logsembed = new Discord.MessageEmbed()
+                .setColor('#00008b')
+                .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Roles Create Limits]`)
+                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+            return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+        }
     }
 
     db.add(`executer_${role.guild.id}_${entry.id}_rolecreate`, 1)
@@ -150,11 +152,13 @@ client.on("roleDelete", async role => {
     if (author >= limts) {
         db.delete(`executer_${role.guild.id}_${entry.id}_roledelete`)
         role.guild.members.ban(entry.id)
-        let logsembed = new Discord.MessageEmbed()
+        if (logs) {
+            let logsembed = new Discord.MessageEmbed()
             .setColor('#00008b')
             .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Roles Delete Limits]`)
             .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
         return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+        }
     }
 
     db.add(`executer_${role.guild.id}_${entry.id}_roledelete`, 1)
@@ -188,7 +192,7 @@ client.on("channelCreate", async channel => {
     let author = db.get(`executer_${channel.guild.id}_${entry.id}_channelcreate`)
     let limts = db.get(`channelcreatelimts_${channel.guild.id}`)
 
-    if (limts === null && logs && logs) {
+    if (limts === null && logs) {
         let nolimit = new Discord.MessageEmbed()
             .setColor('#f67975')
             .setTitle(`<:ignore:923151545569267752> ${entry.tag} Created A Channel But No Limit Found To Punish`)
@@ -199,11 +203,13 @@ client.on("channelCreate", async channel => {
     if (author >= limts) {
         db.delete(`executer_${channel.guild.id}_${entry.id}_channelcreate`)
         channel.guild.members.ban(entry.id)
-        let logsembed = new Discord.MessageEmbed()
-            .setColor('#00008b')
-            .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Channel Create Limits]`)
-            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+        if (logs) {
+            let logsembed = new Discord.MessageEmbed()
+                .setColor('#00008b')
+                .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Channel Create Limits]`)
+                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+            return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+        }
     }
 
     db.add(`executer_${channel.guild.id}_${entry.id}_channelcreate`, 1)
@@ -249,11 +255,13 @@ client.on("channelDelete", async channel => {
     if (author >= limts) {
         db.delete(`executer_${channel.guild.id}_${entry.id}_channeldelete`)
         channel.guild.members.ban(entry.id)
-        let logsembed = new Discord.MessageEmbed()
+        if(logs){
+            let logsembed = new Discord.MessageEmbed()
             .setColor('#00008b')
             .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Channel Delete Limits]`)
             .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
         return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+        }
     }
 
     db.add(`executer_${channel.guild.id}_${entry.id}_channeldelete`, 1)
@@ -305,11 +313,13 @@ client.on("guildMemberRemove", async member => {
             if (author >= limts) {
                 db.delete(`executer_${member.guild.id}_${entry.id}_kicklimts`)
                 member.guild.members.ban(entry.id)
-                let logsembed = new Discord.MessageEmbed()
+                if(logs){
+                    let logsembed = new Discord.MessageEmbed()
                     .setColor('#00008b')
                     .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Kick Limits]`)
                     .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
                 return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+                }
             }
         }
 
@@ -363,11 +373,13 @@ client.on("guildMemberRemove", async member => {
             if (author >= limts) {
                 db.delete(`executer_${member.guild.id}_${entry.id}_banlimts`)
                 member.guild.members.ban(entry.id)
-                let logsembed = new Discord.MessageEmbed()
+                if(logs){
+                    let logsembed = new Discord.MessageEmbed()
                     .setColor('#00008b')
                     .setTitle(`<:perm:923904697423777792> ${entry.tag} was trying to raid but failed miserabely [Breaking Ban Limits]`)
                     .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
                 return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+                }
             }
 
             db.add(`executer_${member.guild.id}_${entry.id}_banlimts`, 1)
