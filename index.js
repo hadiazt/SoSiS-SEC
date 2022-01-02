@@ -125,7 +125,7 @@ client.on("roleCreate", async role => {
     }
 
     if (author >= limts) {
-        if (role.guild.members.cache.get(entry.id).bannable) {
+        if (role.guild.members.cache.get(entry.id).bannable()) {
             db.delete(`executer_${role.guild.id}_${entry.id}_rolecreate`)
             role.guild.members.ban(entry.id)
             let logsembed = new Discord.MessageEmbed()
@@ -181,7 +181,7 @@ client.on("roleDelete", async role => {
     }
 
     if (author >= limts) {
-        if (role.guild.members.cache.get(entry.id).bannable) {
+        if (role.guild.members.cache.get(entry.id).bannable()) {
             db.delete(`executer_${role.guild.id}_${entry.id}_roledelete`)
             role.guild.members.ban(entry.id)
             let logsembed = new Discord.MessageEmbed()
@@ -237,7 +237,7 @@ client.on("channelCreate", async channel => {
     }
 
     if (author >= limts) {
-        if (channel.guild.members.cache.get(entry.id).bannable) {
+        if (channel.guild.members.cache.get(entry.id).bannable()) {
             db.delete(`executer_${channel.guild.id}_${entry.id}_channelcreate`)
             channel.guild.members.ban(entry.id)
             let logsembed = new Discord.MessageEmbed()
@@ -296,7 +296,7 @@ client.on("channelDelete", async channel => {
     }
 
     if (author >= limts) {
-        if (channel.guild.members.cache.get(entry.id).bannable) {
+        if (channel.guild.members.cache.get(entry.id).bannable()) {
             db.delete(`executer_${channel.guild.id}_${entry.id}_channeldelete`)
             channel.guild.members.ban(entry.id)
             let logsembed = new Discord.MessageEmbed()
@@ -360,7 +360,7 @@ client.on("guildMemberRemove", async member => {
             }
 
             if (author >= limts) {
-                if (member.guild.members.cache.get(entry.id).bannable) {
+                if (member.guild.members.cache.get(entry.id).bannable()) {
                     db.delete(`executer_${member.guild.id}_${entry.id}_kicklimts`)
                     member.guild.members.ban(entry.id)
                     let logsembed = new Discord.MessageEmbed()
@@ -426,7 +426,7 @@ client.on("guildMemberRemove", async member => {
             }
 
             if (author >= limts) {
-                if (member.guild.members.cache.get(entry.id).bannable) {
+                if (member.guild.members.cache.get(entry.id).bannable()) {
                     db.delete(`executer_${member.guild.id}_${entry.id}_banlimts`)
                     member.guild.members.ban(entry.id)
                     let logsembed = new Discord.MessageEmbed()
