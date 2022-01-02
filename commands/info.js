@@ -37,7 +37,7 @@ module.exports = {
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> acitonlog (channel) [Guild Owner & Guild Trusted Users]` +
                                 '\n`For Tracking Users Acitons`' +
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> clearuser (user) [Guild Owner & Guild Trusted Users]` +
-                                '\n`For Removing User Active Warns`' +
+                                '\n`For Removing User Active Warns (All Warns Resets Every Minute)`' +
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> show [Guild Owner & Guild Trusted Users]` +
                                 '\n`Shows Guild Aciton Limits And AcitonLog If Defined`' +
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> trustedlist [everyone]`+
