@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Discord = require("discord.js")
 var os = require('os-utils');
+var VER = require('../package.json').version
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -40,7 +41,7 @@ module.exports = {
 <:Resources:923592402256662558> **Resources**
 <:space:874678195843125278> <:ram:923594665431793694> **RAM :** ${formatMemoryUsage(memoryData.heapUsed)}
 <:space:874678195843125278> <:cpu:923592401820463136> **CPU :** ${v}%
-
+<:space:874678195843125278> <:space:874678195843125278> **VERSION :** ${VER} 
 <:Size:923592402411876372> **Size**
 <:space:874678195843125278> <:guild:923594665683456060> **Servers :** ${client.guilds.cache.size}
 <:space:874678195843125278> <:user:923592406446772235> **Members :** ${MemberCount}
