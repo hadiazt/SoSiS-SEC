@@ -66,19 +66,27 @@ client.on('interactionCreate', async interaction => {
     let logs = db.get(`acitonslogs_${interaction.guild.id}`)
     if (!command) return;
     try {
-        if (logs) {
-            await command.execute(interaction, client);
-            client.channels.cache.get(CONFIG.ACTION).send('```\n' + `${interaction.commandName} Triggerd In ${interaction.guild.name} | ${interaction.channel.name} By ${interaction.user.tag}` + '\n```')
-        } else if (command.data.name === 'actionlog') {
-            await command.execute(interaction, client);
-            client.channels.cache.get(CONFIG.ACTION).send('```\n' + `${interaction.commandName} Triggerd In ${interaction.guild.name} | ${interaction.channel.name} By ${interaction.user.tag}` + '\n```')
-        } else {
-            let setlog = new Discord.MessageEmbed()
-                .setColor('#f67975')
-                .setTitle(`<:ignore:923151545569267752> ${interaction.guild.name} Log Not Found`)
-                .setDescription('Please Use `/actionlog` For Setting Log')
-            return interaction.reply({ embeds: [setlog] });
+        if (interaction.guild.members.cache.get(client.user.id).permissions.has("ADMINISTRATOR")) {
+            if (logs) {
+                await command.execute(interaction, client);
+                client.channels.cache.get(CONFIG.ACTION).send('```\n' + `${interaction.commandName} Triggerd In ${interaction.guild.name} | ${interaction.channel.name} By ${interaction.user.tag}` + '\n```')
+            } else if (command.data.name === 'actionlog') {
+                await command.execute(interaction, client);
+                client.channels.cache.get(CONFIG.ACTION).send('```\n' + `${interaction.commandName} Triggerd In ${interaction.guild.name} | ${interaction.channel.name} By ${interaction.user.tag}` + '\n```')
+            } else {
+                let setlog = new Discord.MessageEmbed()
+                    .setColor('#f67975')
+                    .setTitle(`<:ignore:923151545569267752> ${interaction.guild.name} Log Not Found`)
+                    .setDescription('Please Use `/actionlog` For Setting Log')
+                return interaction.reply({ embeds: [setlog] });
 
+            }
+        } else {
+            let missingperm = new Discord.MessageEmbed()
+                .setColor('#f67975')
+                .setTitle(`<:ignore:923151545569267752> Missings Permission`)
+                .setDescription('Please Make Sure I Have `ADMINISTRATOR` Permission')
+            return interaction.reply({ embeds: [missingperm] });
         }
     } catch (error) {
         console.error(error);
