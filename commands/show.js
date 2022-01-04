@@ -10,6 +10,7 @@ module.exports = {
         async execute(interaction) {
 
                 let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
+                let extraowners = db.get(`extraowners_${interaction.guild.id}`)
 
                 let rolelimt = db.get(`rolecreatelimt_${interaction.guild.id}`)
                 let roledelete = db.get(`roledeletelimts_${interaction.guild.id}`)
@@ -28,8 +29,23 @@ module.exports = {
 
                 if (logschannel) logschannel = `<:enable:923158125790494761> <#${logschannel}>`; else logschannel = "<:disable:923158125878575144>"
 
-
-                if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
+                if (extraowners && extraowners.find(find => find.user == interaction.user.id)) {
+                        let showembed = new Discord.MessageEmbed()
+                                .setColor('#85db61')
+                                .setTitle('Anti-Nuke Limits:')
+                                .addFields(
+                                        { name: 'Role Create Limits', value: '** **' + rolelimt, inline: true },
+                                        { name: 'Role Delete Limits', value: '** **' + roledelete, inline: true },
+                                        { name: 'Channel Create Limits', value: '** **' + channelcreatelimts, inline: true },
+                                        { name: 'Channel Delete Limits', value: '** **' + channeldeletelimts, inline: true },
+                                        { name: 'Ban Limits', value: '** **' + banlimts, inline: true },
+                                        { name: 'Kick Limits', value: '** **' + kicklimts, inline: true },
+                                        { name: 'Aciton Log Channel', value: '** **' + logschannel, inline: true },
+                                )
+                        return interaction.reply({
+                                embeds: [showembed]
+                        });
+                } else if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
                         let showembed = new Discord.MessageEmbed()
                                 .setColor('#85db61')
                                 .setTitle('Anti-Nuke Limits:')

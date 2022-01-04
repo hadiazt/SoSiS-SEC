@@ -16,9 +16,9 @@ module.exports = {
         async execute(interaction, client) {
 
                 var log = db.get(`acitonslogs_${interaction.guild.id}`)
-                let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
+                let extraowners = db.get(`extraowners_${interaction.guild.id}`)
                 var user = interaction.options.getUser('user')
-                if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
+                if (extraowners && extraowners.find(find => find.user == interaction.user.id)) {
                         db.delete(`executer_${interaction.guild.id}_${user.id}_kicklimts`)
                         db.delete(`executer_${interaction.guild.id}_${user.id}_banlimts`)
                         db.delete(`executer_${interaction.guild.id}_${user.id}_rolecreate`)
@@ -32,7 +32,7 @@ module.exports = {
                         context.drawImage(background, 0, 0, canvas.width, canvas.height);
                         context.font = '100px OpenSans-SemiBoldItalic';
                         context.fillStyle = 'black';
-                       context.fillText(interaction.user.tag, 720, 270, 300, 250);                        context.fillText(`REMOVED WARNS FROM ${user.tag}`, 450, 640, 650, 550);
+                        context.fillText(interaction.user.tag, 720, 270, 300, 250);                        context.fillText(`REMOVED WARNS FROM ${user.tag}`, 450, 640, 650, 550);
                         context.beginPath()
                         context.arc(250, 250, 200, 0, 2 * Math.PI);
                         context.clip();
@@ -69,7 +69,7 @@ module.exports = {
                         context.drawImage(background, 0, 0, canvas.width, canvas.height);
                         context.font = '100px OpenSans-SemiBoldItalic';
                         context.fillStyle = 'black';
-                       context.fillText(interaction.user.tag, 720, 270, 300, 250);                        context.fillText(`REMOVED WARNS FROM ${user.tag}`, 450, 640, 650, 550);
+                        context.fillText(interaction.user.tag, 720, 270, 300, 250);                        context.fillText(`REMOVED WARNS FROM ${user.tag}`, 450, 640, 650, 550);
                         context.beginPath();
                         context.arc(250, 250, 200, 0, 2 * Math.PI);
                         context.clip();
@@ -96,7 +96,7 @@ module.exports = {
                 let owneronly = new Discord.MessageEmbed()
                         .setColor('#f67975')
                         .setTitle(`You Can't Use This Command!`)
-                        .setDescription('<:ignore:923151545569267752> Only **Server Owner** & **Trusted Users** Can Use This Command!')
+                        .setDescription('<:ignore:923151545569267752> Only **Server Owner** & **Extra Owners** Can Use This Command!')
                 return interaction.reply({
                         embeds: [owneronly]
                 });

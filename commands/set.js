@@ -29,10 +29,10 @@ module.exports = {
     var config = interaction.options.get('config').value
     var num = interaction.options.get('num').value
 
-    let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
+    let extraowners = db.get(`extraowners_${interaction.guild.id}`)
     var log = db.get(`acitonslogs_${interaction.guild.id}`)
 
-    if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
+    if (extraowners && extraowners.find(find => find.user == interaction.user.id)) {
       if (config === 'setrolecreatelimit') {
         db.set(`rolecreatelimt_${interaction.guild.id}`, num)
         let done = new Discord.MessageEmbed()

@@ -13,10 +13,10 @@ module.exports = {
                 .setRequired(true)),
     async execute(interaction) {
 
-        let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
+        let extraowners = db.get(`extraowners_${interaction.guild.id}`)
         var logs = interaction.options.getChannel('channel')
 
-        if (trustedusers && trustedusers.find(find => find.user == interaction.user.id)) {
+        if (extraowners && extraowners.find(find => find.user == interaction.user.id)) {
             db.set(`acitonslogs_${interaction.guild.id}`, logs.id)
             let done = new Discord.MessageEmbed()
                 .setColor('#85db61')
@@ -38,7 +38,7 @@ module.exports = {
         let owneronly = new Discord.MessageEmbed()
             .setColor('#f67975')
             .setTitle(`You Can't Use This Command!`)
-            .setDescription('<:ignore:923151545569267752> Only **Server Owner** & **Trusted Users** Can Use This Command!')
+            .setDescription('<:ignore:923151545569267752> Only **Server Owner** & **Extra Owners** Can Use This Command!')
         return interaction.reply({
             embeds: [owneronly]
         });

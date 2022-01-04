@@ -1,5 +1,9 @@
 const Discord = require('discord.js')
-const client = new Discord.Client({ intents: '14079', disableMentions: 'everyone', })
+const client = new Discord.Client({
+    intents: '14079',
+    disableMentions: 'everyone',
+})
+
 const db = require('quick.db')
 const { readdirSync } = require('fs');
 const CONFIG = require('./data/config.json')
@@ -104,14 +108,23 @@ client.on("roleCreate", async role => {
 
     const entry = user.executor
     let trustedusers = db.get(`trustedusers_${role.guild.id}`)
+    let extraowners = db.get(`extraowners_${role.guild.id}`)
     let logs = db.get(`acitonslogs_${role.guild.id}`)
 
+    if (extraowners && extraowners.find(find => find.user == entry.id)) {
+        let trustedac = new Discord.MessageEmbed()
+            .setColor('#85db61')
+            .setTitle(`<:check:923151545401479179> ${entry.tag} Created An Role But He/She Is In Extra Owner`)
+        return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+    }    
     if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
         let trustedac = new Discord.MessageEmbed()
             .setColor('#85db61')
             .setTitle(`<:check:923151545401479179> ${entry.tag} Created An Role But He/She Is In Trusted Users`)
         return client.channels.cache.get(logs).send({ embeds: [trustedac] });
     }
+
+    
 
     let author = db.get(`executer_${role.guild.id}_${entry.id}_rolecreate`)
     let limts = db.get(`rolecreatelimt_${role.guild.id}`)
@@ -125,22 +138,21 @@ client.on("roleCreate", async role => {
     }
 
     if (author >= limts) {
-        if (role.guild.members.cache.get(entry.id).bannable()) {
-            db.delete(`executer_${role.guild.id}_${entry.id}_rolecreate`)
-            role.guild.members.ban(entry.id)
+        db.delete(`executer_${role.guild.id}_${entry.id}_rolecreate`)
+
+        role.guild.members.ban(entry.id).then(a => {
             let logsembed = new Discord.MessageEmbed()
                 .setColor('#00008b')
                 .setTitle(`<:perm:923904697423777792> ${entry.tag} Was Trying To Raid But Failed Miserabely [Breaking Roles Create Limits]`)
                 .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
             return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-        } else {
+        }).catch(e => {
             let logsembed = new Discord.MessageEmbed()
                 .setColor('#f67975')
-                .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her [Missing Permissions]`)
-                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her`)
+                .setDescription('** **\n```\n' + e + '\n```')
             return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-        }
-
+        })
     }
 
     db.add(`executer_${role.guild.id}_${entry.id}_rolecreate`, 1)
@@ -160,8 +172,15 @@ client.on("roleDelete", async role => {
 
     const entry = user.executor
     let trustedusers = db.get(`trustedusers_${role.guild.id}`)
+    let extraowners = db.get(`extraowners_${role.guild.id}`)
     let logs = db.get(`acitonslogs_${role.guild.id}`)
 
+    if (extraowners && extraowners.find(find => find.user == entry.id)) {
+        let trustedac = new Discord.MessageEmbed()
+            .setColor('#85db61')
+            .setTitle(`<:check:923151545401479179> ${entry.tag} Deleted An Role But He/She Is In Extra Owner`)
+        return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+    }
     if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
         let trustedac = new Discord.MessageEmbed()
             .setColor('#85db61')
@@ -181,22 +200,20 @@ client.on("roleDelete", async role => {
     }
 
     if (author >= limts) {
-        if (role.guild.members.cache.get(entry.id).bannable()) {
-            db.delete(`executer_${role.guild.id}_${entry.id}_roledelete`)
-            role.guild.members.ban(entry.id)
+        db.delete(`executer_${role.guild.id}_${entry.id}_roledelete`)
+        role.guild.members.ban(entry.id).then(a => {
             let logsembed = new Discord.MessageEmbed()
                 .setColor('#00008b')
                 .setTitle(`<:perm:923904697423777792> ${entry.tag} Was Trying To Raid But Failed Miserabely [Breaking Roles Delete Limits]`)
                 .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
             return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-        } else {
+        }).catch(e => {
             let logsembed = new Discord.MessageEmbed()
                 .setColor('#f67975')
-                .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her [Missing Permissions]`)
-                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her`)
+                .setDescription('** **\n```\n' + e + '\n```')
             return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-        }
-
+        })
     }
 
     db.add(`executer_${role.guild.id}_${entry.id}_roledelete`, 1)
@@ -216,8 +233,15 @@ client.on("channelCreate", async channel => {
 
     const entry = user.executor
     let trustedusers = db.get(`trustedusers_${channel.guild.id}`)
+    let extraowners = db.get(`extraowners_${channel.guild.id}`)
     let logs = db.get(`acitonslogs_${channel.guild.id}`)
 
+    if (extraowners && extraowners.find(find => find.user == entry.id)) {
+        let trustedac = new Discord.MessageEmbed()
+            .setColor('#85db61')
+            .setTitle(`<:check:923151545401479179> ${entry.tag} Created An Channel But He/She Is In Extra Owner`)
+        return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+    }    
     if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
         let trustedac = new Discord.MessageEmbed()
             .setColor('#85db61')
@@ -237,22 +261,20 @@ client.on("channelCreate", async channel => {
     }
 
     if (author >= limts) {
-        if (channel.guild.members.cache.get(entry.id).bannable()) {
-            db.delete(`executer_${channel.guild.id}_${entry.id}_channelcreate`)
-            channel.guild.members.ban(entry.id)
+        db.delete(`executer_${channel.guild.id}_${entry.id}_channelcreate`)
+        channel.guild.members.ban(entry.id).then(a => {
             let logsembed = new Discord.MessageEmbed()
                 .setColor('#00008b')
                 .setTitle(`<:perm:923904697423777792> ${entry.tag} Was Trying To Raid But Failed Miserabely [Breaking Channel Create Limits]`)
                 .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
             return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-        } else {
+        }).catch(e => {
             let logsembed = new Discord.MessageEmbed()
                 .setColor('#f67975')
-                .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her [Missing Permissions]`)
-                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her`)
+                .setDescription('** **\n```\n' + e + '\n```')
             return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-        }
-
+        })
     }
 
     db.add(`executer_${channel.guild.id}_${entry.id}_channelcreate`, 1)
@@ -275,14 +297,22 @@ client.on("channelDelete", async channel => {
 
     const entry = user.executor
     let trustedusers = db.get(`trustedusers_${channel.guild.id}`)
+    let extraowners = db.get(`extraowners_${channel.guild.id}`)
     let logs = db.get(`acitonslogs_${channel.guild.id}`)
 
+    if (extraowners && extraowners.find(find => find.user == entry.id)) {
+        let trustedac = new Discord.MessageEmbed()
+            .setColor('#85db61')
+            .setTitle(`<:check:923151545401479179> ${entry.tag} Deleted An Channel But He/She Is In Extra Owner`)
+        return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+    }
     if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
         let trustedac = new Discord.MessageEmbed()
             .setColor('#85db61')
             .setTitle(`<:check:923151545401479179> ${entry.tag} Deleted An Channel But He/She Is In Trusted Users`)
         return client.channels.cache.get(logs).send({ embeds: [trustedac] });
     }
+
 
     let author = db.get(`executer_${channel.guild.id}_${entry.id}_channeldelete`)
     let limts = db.get(`channeldeletelimts_${channel.guild.id}`)
@@ -296,21 +326,21 @@ client.on("channelDelete", async channel => {
     }
 
     if (author >= limts) {
-        if (channel.guild.members.cache.get(entry.id).bannable()) {
-            db.delete(`executer_${channel.guild.id}_${entry.id}_channeldelete`)
-            channel.guild.members.ban(entry.id)
+        db.delete(`executer_${channel.guild.id}_${entry.id}_channeldelete`)
+        channel.guild.members.ban(entry.id).then(a => {
             let logsembed = new Discord.MessageEmbed()
                 .setColor('#00008b')
                 .setTitle(`<:perm:923904697423777792> ${entry.tag} Was Trying To Raid But Failed Miserabely [Breaking Channel Delete Limits]`)
                 .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
             return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-        } else {
+        }).catch(e => {
             let logsembed = new Discord.MessageEmbed()
                 .setColor('#f67975')
-                .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her [Missing Permissions]`)
-                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her`)
+                .setDescription('** **\n```\n' + e + '\n```')
             return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-        }
+        })
+
 
     }
 
@@ -337,47 +367,52 @@ client.on("guildMemberRemove", async member => {
             .then(audit => audit.entries.first());
         const entry = entry2.executor;
 
-        if (entry.id !== client.user.id) {
-            let trustedusers = db.get(`trustedusers_${member.guild.id}`)
-            let logs = db.get(`acitonslogs_${member.guild.id}`)
+        let trustedusers = db.get(`trustedusers_${member.guild.id}`)
+        let extraowners = db.get(`extraowners_${member.guild.id}`)
+        let logs = db.get(`acitonslogs_${member.guild.id}`)
 
-            if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
-                let trustedac = new Discord.MessageEmbed()
-                    .setColor('#85db61')
-                    .setTitle(`<:check:923151545401479179> ${entry.tag} Kicked An Member But He/She Is In Trusted Users`)
-                return client.channels.cache.get(logs).send({ embeds: [trustedac] });
-            }
-
-            let author = db.get(`executer_${member.guild.id}_${entry.id}_kicklimts`)
-            let limts = db.get(`kicklimts_${member.guild.id}`)
-
-            if (limts === null && logs) {
-                let nolimit = new Discord.MessageEmbed()
-                    .setColor('#f67975')
-                    .setTitle(`<:ignore:923151545569267752> ${entry.tag} Kicked An Member But No Limit Found To Punish`)
-                    .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-                return client.channels.cache.get(logs).send({ embeds: [nolimit] });
-            }
-
-            if (author >= limts) {
-                if (member.guild.members.cache.get(entry.id).bannable()) {
-                    db.delete(`executer_${member.guild.id}_${entry.id}_kicklimts`)
-                    member.guild.members.ban(entry.id)
-                    let logsembed = new Discord.MessageEmbed()
-                        .setColor('#00008b')
-                        .setTitle(`<:perm:923904697423777792> ${entry.tag} Was Trying To Raid But Failed Miserabely [Breaking Kick Limits]`)
-                        .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-                    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-                } else {
-                    let logsembed = new Discord.MessageEmbed()
-                        .setColor('#f67975')
-                        .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her [Missing Permissions]`)
-                        .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-                    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-                }
-
-            }
+        if (extraowners && extraowners.find(find => find.user == entry.id)) {
+            let trustedac = new Discord.MessageEmbed()
+                .setColor('#85db61')
+                .setTitle(`<:check:923151545401479179> ${entry.tag} Kicked An Member But He/She Is In Extra Owner`)
+            return client.channels.cache.get(logs).send({ embeds: [trustedac] });
         }
+
+        if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
+            let trustedac = new Discord.MessageEmbed()
+                .setColor('#85db61')
+                .setTitle(`<:check:923151545401479179> ${entry.tag} Kicked An Member But He/She Is In Trusted Users`)
+            return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+        }
+
+        let author = db.get(`executer_${member.guild.id}_${entry.id}_kicklimts`)
+        let limts = db.get(`kicklimts_${member.guild.id}`)
+
+        if (limts === null && logs) {
+            let nolimit = new Discord.MessageEmbed()
+                .setColor('#f67975')
+                .setTitle(`<:ignore:923151545569267752> ${entry.tag} Kicked An Member But No Limit Found To Punish`)
+                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+            return client.channels.cache.get(logs).send({ embeds: [nolimit] });
+        }
+
+        if (author >= limts) {
+            db.delete(`executer_${member.guild.id}_${entry.id}_kicklimts`)
+            member.guild.members.ban(entry.id).then(a => {
+                let logsembed = new Discord.MessageEmbed()
+                    .setColor('#00008b')
+                    .setTitle(`<:perm:923904697423777792> ${entry.tag} Was Trying To Raid But Failed Miserabely [Breaking Kick Limits]`)
+                    .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+            }).catch(e => {
+                let logsembed = new Discord.MessageEmbed()
+                    .setColor('#f67975')
+                    .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her`)
+                    .setDescription('** **\n```\n' + e + '\n```')
+                return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+            })
+        }
+
 
         db.add(`executer_${member.guild.id}_${entry.id}_kicklimts`, 1)
         let logsembed = new Discord.MessageEmbed()
@@ -403,54 +438,59 @@ client.on("guildMemberRemove", async member => {
             .then(audit => audit.entries.first());
         const entry = entry2.executor;
 
-        if (entry.id !== client.user.id) {
-            let trustedusers = db.get(`trustedusers_${member.guild.id}`)
-            let logs = db.get(`acitonslogs_${member.guild.id}`)
+        let trustedusers = db.get(`trustedusers_${member.guild.id}`)
+        let extraowners = db.get(`extraowners_${member.guild.id}`)
+        let logs = db.get(`acitonslogs_${member.guild.id}`)
 
-            if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
-                let trustedac = new Discord.MessageEmbed()
-                    .setColor('#85db61')
-                    .setTitle(`<:check:923151545401479179> ${entry.tag} Banned An Member But He/She Is In Trusted Users`)
-                return client.channels.cache.get(logs).send({ embeds: [trustedac] });
-            }
-
-            let author = db.get(`executer_${member.guild.id}_${entry.id}_banlimts`)
-            let limts = db.get(`banlimts_${member.guild.id}`)
-
-            if (limts === null && logs) {
-                let nolimit = new Discord.MessageEmbed()
-                    .setColor('#f67975')
-                    .setTitle(`<:ignore:923151545569267752> ${entry.tag} Banned A Member But No Limit Found To Punish`)
-                    .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-                return client.channels.cache.get(logs).send({ embeds: [nolimit] });
-            }
-
-            if (author >= limts) {
-                if (member.guild.members.cache.get(entry.id).bannable()) {
-                    db.delete(`executer_${member.guild.id}_${entry.id}_banlimts`)
-                    member.guild.members.ban(entry.id)
-                    let logsembed = new Discord.MessageEmbed()
-                        .setColor('#00008b')
-                        .setTitle(`<:perm:923904697423777792> ${entry.tag} Was Trying To Raid But Failed Miserabely [Breaking Ban Limits]`)
-                        .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-                    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-                } else {
-                    let logsembed = new Discord.MessageEmbed()
-                        .setColor('#f67975')
-                        .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her [Missing Permissions]`)
-                        .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-                    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-                }
-
-            }
-
-            db.add(`executer_${member.guild.id}_${entry.id}_banlimts`, 1)
-            let logsembed = new Discord.MessageEmbed()
-                .setColor('RED')
-                .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Banning Member [${author || 0} /${limts || 0}]`)
-                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-            return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+        if (extraowners && extraowners.find(find => find.user == entry.id)) {
+            let trustedac = new Discord.MessageEmbed()
+                .setColor('#85db61')
+                .setTitle(`<:check:923151545401479179> ${entry.tag} Banned An Member But He/She Is In Extra Owner`)
+            return client.channels.cache.get(logs).send({ embeds: [trustedac] });
         }
+        
+        if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
+            let trustedac = new Discord.MessageEmbed()
+                .setColor('#85db61')
+                .setTitle(`<:check:923151545401479179> ${entry.tag} Banned An Member But He/She Is In Trusted Users`)
+            return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+        }
+
+        let author = db.get(`executer_${member.guild.id}_${entry.id}_banlimts`)
+        let limts = db.get(`banlimts_${member.guild.id}`)
+
+        if (limts === null && logs) {
+            let nolimit = new Discord.MessageEmbed()
+                .setColor('#f67975')
+                .setTitle(`<:ignore:923151545569267752> ${entry.tag} Banned A Member But No Limit Found To Punish`)
+                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+            return client.channels.cache.get(logs).send({ embeds: [nolimit] });
+        }
+
+        if (author >= limts) {
+            db.delete(`executer_${member.guild.id}_${entry.id}_banlimts`)
+            member.guild.members.ban(entry.id).then(a => {
+                let logsembed = new Discord.MessageEmbed()
+                    .setColor('#00008b')
+                    .setTitle(`<:perm:923904697423777792> ${entry.tag} Was Trying To Raid But Failed Miserabely [Breaking Ban Limits]`)
+                    .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+            }).catch(e => {
+                let logsembed = new Discord.MessageEmbed()
+                    .setColor('#f67975')
+                    .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Raiding But Failed To Ban Him/Her`)
+                    .setDescription('** **\n```\n' + e + '\n```')
+                return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+            })
+        }
+
+        db.add(`executer_${member.guild.id}_${entry.id}_banlimts`, 1)
+        let logsembed = new Discord.MessageEmbed()
+            .setColor('RED')
+            .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Banning Member [${author || 0} /${limts || 0}]`)
+            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+
     }
 })
 
