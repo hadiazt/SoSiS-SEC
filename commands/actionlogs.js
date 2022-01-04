@@ -17,21 +17,39 @@ module.exports = {
         var logs = interaction.options.getChannel('channel')
 
         if (extraowners && extraowners.find(find => find.user == interaction.user.id)) {
-            db.set(`acitonslogs_${interaction.guild.id}`, logs.id)
-            let done = new Discord.MessageEmbed()
-                .setColor('#85db61')
-                .setDescription(`<:check:923151545401479179> Well Done Aciton-Logs Channel Has Been Set To <#${logs.id}>`)
-            return interaction.reply({
-                embeds: [done]
-            });
+            if (logs.type === 'GUILD_TEXT') {
+                db.set(`acitonslogs_${interaction.guild.id}`, logs.id)
+                let done = new Discord.MessageEmbed()
+                    .setColor('#85db61')
+                    .setDescription(`<:check:923151545401479179> Well Done Aciton-Logs Channel Has Been Set To <#${logs.id}>`)
+                return interaction.reply({
+                    embeds: [done]
+                });
+            } else {
+                let err = new Discord.MessageEmbed()
+                    .setColor('#f67975')
+                    .setTitle(`<:ignore:923151545569267752> Make Sure That A Channel Type Is TEXT`)
+                return interaction.reply({
+                    embeds: [err]
+                });
+            }
         } else if (interaction.user.id === interaction.guild.ownerId || interaction.user.id === OWNER) {
-            db.set(`acitonslogs_${interaction.guild.id}`, logs.id)
-            let done = new Discord.MessageEmbed()
-                .setColor('#85db61')
-                .setDescription(`<:check:923151545401479179> Well Done Aciton-Logs Channel Has Been Set To <#${logs.id}>`)
-            return interaction.reply({
-                embeds: [done]
-            });
+            if (logs.type === 'GUILD_TEXT') {
+                db.set(`acitonslogs_${interaction.guild.id}`, logs.id)
+                let done = new Discord.MessageEmbed()
+                    .setColor('#85db61')
+                    .setDescription(`<:check:923151545401479179> Well Done Aciton-Logs Channel Has Been Set To <#${logs.id}>`)
+                return interaction.reply({
+                    embeds: [done]
+                });
+            } else {
+                let err = new Discord.MessageEmbed()
+                    .setColor('#f67975')
+                    .setTitle(`<:ignore:923151545569267752> Make Sure That A Channel Type Is TEXT`)
+                return interaction.reply({
+                    embeds: [err]
+                });
+            }
         }
 
 
