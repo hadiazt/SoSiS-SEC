@@ -116,7 +116,7 @@ client.on("roleCreate", async role => {
             .setColor('#85db61')
             .setTitle(`<:check:923151545401479179> ${entry.tag} Created An Role But He/She Is In Extra Owner`)
         return client.channels.cache.get(logs).send({ embeds: [trustedac] });
-    }    
+    }
     if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
         let trustedac = new Discord.MessageEmbed()
             .setColor('#85db61')
@@ -124,7 +124,7 @@ client.on("roleCreate", async role => {
         return client.channels.cache.get(logs).send({ embeds: [trustedac] });
     }
 
-    
+
 
     let author = db.get(`executer_${role.guild.id}_${entry.id}_rolecreate`)
     let limts = db.get(`rolecreatelimt_${role.guild.id}`)
@@ -156,11 +156,13 @@ client.on("roleCreate", async role => {
     }
 
     db.add(`executer_${role.guild.id}_${entry.id}_rolecreate`, 1)
-    let logsembed = new Discord.MessageEmbed()
-        .setColor('RED')
-        .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Creating Role [${author || 0} /${limts || 0}]`)
-        .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+    if (logs) {
+        let logsembed = new Discord.MessageEmbed()
+            .setColor('RED')
+            .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Creating Role [${author || 0} /${limts || 0}]`)
+            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+    }
 });
 
 // --------------------------------------------
@@ -217,11 +219,13 @@ client.on("roleDelete", async role => {
     }
 
     db.add(`executer_${role.guild.id}_${entry.id}_roledelete`, 1)
-    let logsembed = new Discord.MessageEmbed()
-        .setColor('RED')
-        .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Deleting Role [${author || 0} /${limts || 0}]`)
-        .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+    if (logs) {
+        let logsembed = new Discord.MessageEmbed()
+            .setColor('RED')
+            .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Deleting Role [${author || 0} /${limts || 0}]`)
+            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+    }
 });
 
 // --------------------------------------------
@@ -241,7 +245,7 @@ client.on("channelCreate", async channel => {
             .setColor('#85db61')
             .setTitle(`<:check:923151545401479179> ${entry.tag} Created An Channel But He/She Is In Extra Owner`)
         return client.channels.cache.get(logs).send({ embeds: [trustedac] });
-    }    
+    }
     if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
         let trustedac = new Discord.MessageEmbed()
             .setColor('#85db61')
@@ -278,14 +282,13 @@ client.on("channelCreate", async channel => {
     }
 
     db.add(`executer_${channel.guild.id}_${entry.id}_channelcreate`, 1)
-    let logsembed = new Discord.MessageEmbed()
-        .setColor('RED')
-        .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Creating Channel [${author || 0} /${limts || 0}]`)
-        .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-
-
-
+    if (logs) {
+        let logsembed = new Discord.MessageEmbed()
+            .setColor('RED')
+            .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Creating Channel [${author || 0} /${limts || 0}]`)
+            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+    }
 });
 
 // --------------------------------------------
@@ -345,12 +348,13 @@ client.on("channelDelete", async channel => {
     }
 
     db.add(`executer_${channel.guild.id}_${entry.id}_channeldelete`, 1)
-    let logsembed = new Discord.MessageEmbed()
-        .setColor('RED')
-        .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Deleting Channel [${author || 0} /${limts || 0}]`)
-        .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-
+    if (logs) {
+        let logsembed = new Discord.MessageEmbed()
+            .setColor('RED')
+            .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Deleting Channel [${author || 0} /${limts || 0}]`)
+            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+    }
 });
 
 // --------------------------------------------
@@ -415,12 +419,13 @@ client.on("guildMemberRemove", async member => {
 
 
         db.add(`executer_${member.guild.id}_${entry.id}_kicklimts`, 1)
-        let logsembed = new Discord.MessageEmbed()
-            .setColor('RED')
-            .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Kicking Memeber [${author || 0} /${limts || 0}]`)
-            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-
+        if (logs) {
+            let logsembed = new Discord.MessageEmbed()
+                .setColor('RED')
+                .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Kicking Memeber [${author || 0} /${limts || 0}]`)
+                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+            return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+        }
     }
 })
 
@@ -448,7 +453,7 @@ client.on("guildMemberRemove", async member => {
                 .setTitle(`<:check:923151545401479179> ${entry.tag} Banned An Member But He/She Is In Extra Owner`)
             return client.channels.cache.get(logs).send({ embeds: [trustedac] });
         }
-        
+
         if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
             let trustedac = new Discord.MessageEmbed()
                 .setColor('#85db61')
@@ -485,12 +490,13 @@ client.on("guildMemberRemove", async member => {
         }
 
         db.add(`executer_${member.guild.id}_${entry.id}_banlimts`, 1)
-        let logsembed = new Discord.MessageEmbed()
-            .setColor('RED')
-            .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Banning Member [${author || 0} /${limts || 0}]`)
-            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
-        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
-
+        if (logs) {
+            let logsembed = new Discord.MessageEmbed()
+                .setColor('RED')
+                .setTitle(`<:erorr:878139495764090880> ${entry.tag} Is Banning Member [${author || 0} /${limts || 0}]`)
+                .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+            return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+        }
     }
 })
 
