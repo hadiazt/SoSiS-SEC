@@ -178,7 +178,7 @@ module.exports = {
         let owneronly = new Discord.MessageEmbed()
             .setColor('#f67975')
             .setTitle(`You Can't Use This Command!`)
-            .setDescription('<:ignore:923151545569267752> Only **Server Owner** & **Trusted Users** Can Use This Command!')
+            .setDescription('<:ignore:923151545569267752> Only **Server Owner** & **Extra Owners** Can Use This Command!')
         return interaction.reply({
             embeds: [owneronly]
         });
