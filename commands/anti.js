@@ -23,8 +23,8 @@ module.exports = {
             option.setName('value')
                 .setDescription('ON/OFF')
                 .setRequired(true)
-                .addChoice('ON', 'true')
-                .addChoice('OFF', 'false')
+                .addChoice('ON', 'ON')
+                .addChoice('OFF', 'OFF')
         ),
 
     async execute(interaction, client) {
@@ -36,26 +36,57 @@ module.exports = {
         var log = db.get(`acitonslogs_${interaction.guild.id}`)
 
         if (extraowners && extraowners.find(find => find.user == interaction.user.id)) {
-            if (config === 'bot') {
-                if (value === 'true') {
-                    db.set(`addbot_${interaction.guild.id}`, true)
+            if (config === 'antibot') {
+                if (value === 'ON') {
+                    db.set(`addbot_${interaction.guild.id}`, 'true')
                 }
-                if (value === 'false') {
-                    db.set(`addbot_${interaction.guild.id}`, false)
+                if (value === 'OFF') {
+                    db.set(`addbot_${interaction.guild.id}`, 'false')
+                }
+            }
+            if (config === 'antievery/here') {
+                if (value === 'ON') {
+                    db.set(`every_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`every_${interaction.guild.id}`, 'false')
+                }
+            }
+            if (config === 'antiinvite') {
+                if (value === 'ON') {
+                    db.set(`inv_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`inv_${interaction.guild.id}`, 'false')
+                }
+            }
+            if (config === 'antiweblink') {
+                if (value === 'ON') {
+                    db.set(`weblink_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`weblink_${interaction.guild.id}`, 'false')
+                }
+            }
+            if (config === 'antimalware') {
+                if (value === 'ON') {
+                    db.set(`malware_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`malware_${interaction.guild.id}`, 'false')
                 }
             }
 
-
             let done = new Discord.MessageEmbed()
                 .setColor('#85db61')
-                .setDescription(`<:check:923151545401479179> ${config} Has Been Turned ${value}`)
+                .setDescription(`<:check:923151545401479179> **${config}** Has Been Turned **${value}**`)
             const canvas = Canvas.createCanvas(1242, 703);
             const context = canvas.getContext('2d');
             const background = await Canvas.loadImage(`./data/bg.png`);
             context.drawImage(background, 0, 0, canvas.width, canvas.height);
             context.font = '100px OpenSans-SemiBoldItalic';
             context.fillStyle = 'black';
-            context.fillText(interaction.user.tag, 720, 270, 300, 250); context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+            context.fillText(interaction.user.tag, 720, 270, 300, 250); context.fillText(`Changes ${config} Limits To ${value}`, 470, 640, 700, 250);
             context.beginPath();
             context.arc(250, 250, 200, 0, 2 * Math.PI);
             context.clip();
@@ -68,11 +99,79 @@ module.exports = {
                 .setDescription(`<:check:923151545401479179> **${config}** Has Been Turned **${value}** By **${interaction.user.tag}**`)
                 .setImage('attachment://set.png');
             if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
+
             return interaction.reply({
                 embeds: [done]
             });
-        } else if (interaction.user.id === interaction.guild.ownerId || interaction.user.id === OWNER) {
 
+        } else if (interaction.user.id === interaction.guild.ownerId || interaction.user.id === OWNER) {
+            if (config === 'antibot') {
+                if (value === 'ON') {
+                    db.set(`addbot_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`addbot_${interaction.guild.id}`, 'false')
+                }
+            }
+            if (config === 'antievery/here') {
+                if (value === 'ON') {
+                    db.set(`every_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`every_${interaction.guild.id}`, 'false')
+                }
+            }
+            if (config === 'antiinvite') {
+                if (value === 'ON') {
+                    db.set(`inv_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`inv_${interaction.guild.id}`, 'false')
+                }
+            }
+            if (config === 'antiweblink') {
+                if (value === 'ON') {
+                    db.set(`weblink_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`weblink_${interaction.guild.id}`, 'false')
+                }
+            }
+            if (config === 'antimalware') {
+                if (value === 'ON') {
+                    db.set(`malware_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`malware_${interaction.guild.id}`, 'false')
+                }
+            }
+
+            let done = new Discord.MessageEmbed()
+                .setColor('#85db61')
+                .setDescription(`<:check:923151545401479179> **${config}** Has Been Turned **${value}**`)
+            const canvas = Canvas.createCanvas(1242, 703);
+            const context = canvas.getContext('2d');
+            const background = await Canvas.loadImage(`./data/bg.png`);
+            context.drawImage(background, 0, 0, canvas.width, canvas.height);
+            context.font = '100px OpenSans-SemiBoldItalic';
+            context.fillStyle = 'black';
+            context.fillText(interaction.user.tag, 720, 270, 300, 250); context.fillText(`Changes ${config} Limits To ${value}`, 470, 640, 700, 250);
+            context.beginPath();
+            context.arc(250, 250, 200, 0, 2 * Math.PI);
+            context.clip();
+            const profile = await Canvas.loadImage(interaction.user.displayAvatarURL({ format: 'png', size: 2048 }));
+            context.drawImage(profile, 50, 50, 400, 400);
+            const wladdedimg = new Discord.MessageAttachment(canvas.toBuffer(), "set.png");
+
+            let setted = new Discord.MessageEmbed()
+                .setColor('#85db61')
+                .setDescription(`<:check:923151545401479179> **${config}** Has Been Turned **${value}** By **${interaction.user.tag}**`)
+                .setImage('attachment://set.png');
+            if (log) client.channels.cache.get(log).send({ embeds: [setted], files: [wladdedimg] });
+
+            return interaction.reply({
+                embeds: [done]
+            });
 
         }
 
