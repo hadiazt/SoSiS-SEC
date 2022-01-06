@@ -34,6 +34,8 @@ module.exports = {
                                 '\n`For Removing Guild Trusted Users`' +
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> set (type) (limit) [Guild Owner & Guild Extra Owners]` +
                                 '\n`For Setting Aciton Limits`' +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> anti (type) (ON/OFF) [Guild Owner & Guild Extra Owners]` +
+                                '\n`For Setting Anti Raid`' +
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> acitonlog (channel) [Guild Owner & Guild Extra Owners]` +
                                 '\n`For Tracking Users Acitons`' +
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> clearuser (user) [Guild Owner & Guild Extra Owners]` +

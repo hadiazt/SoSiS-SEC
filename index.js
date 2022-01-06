@@ -518,6 +518,71 @@ client.on("guildMemberRemove", async member => {
 })
 
 // --------------------------------------------
+client.on("guildMemberAdd", async member => {
+    if (member.guild.members.cache.get(client.user.id).permissions.has("ADMINISTRATOR")) {
+
+        const entry1 = await member.guild
+            .fetchAuditLogs()
+            .then(audit => audit.entries.first());
+        if (entry1.action === "BOT_ADD") {
+            const entry2 = await member.guild
+                .fetchAuditLogs({
+                    type: "BOT_ADD"
+                })
+                .then(audit => audit.entries.first());
+            const entry = entry2.executor;
+
+            let trustedusers = db.get(`trustedusers_${member.guild.id}`)
+            let extraowners = db.get(`extraowners_${member.guild.id}`)
+            let logs = db.get(`acitonslogs_${member.guild.id}`)
+
+            if (`antibot_${member.guild.id}` === true && logs) {
+                if (extraowners && extraowners.find(find => find.user == entry.id)) {
+                    let trustedac = new Discord.MessageEmbed()
+                        .setColor('#85db61')
+                        .setTitle(`<:check:923151545401479179> ${entry.tag} Added A Bot But He/She Is In Extra Owner`)
+                        .setDescription(`<:bell_emoji:914129896958205982> **Details :**
+<:space:874678195843125278><:right:874690882417360986> User : <@${entry.id}>` + '`[' + entry.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Bot : <@${member.id}>` + '`[' + member.tag + ']`' + `
+`)
+                    return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+                }
+
+                if (trustedusers && trustedusers.find(find => find.user == entry.id)) {
+                    let trustedac = new Discord.MessageEmbed()
+                        .setColor('#85db61')
+                        .setTitle(`<:check:923151545401479179> ${entry.tag} Added A Bot But He/She Is In Trusted Users`)
+                        .setDescription(`<:bell_emoji:914129896958205982> **Details :**
+<:space:874678195843125278><:right:874690882417360986> User : <@${entry.id}>` + '`[' + entry.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Bot : <@${member.id}>` + '`[' + member.tag + ']`' + `
+`)
+                    return client.channels.cache.get(logs).send({ embeds: [trustedac] });
+                }
+
+                member.guild.members.ban(member.id)
+                member.guild.members.ban(entry.id).then(a => {
+                    let logsembed = new Discord.MessageEmbed()
+                        .setColor('#00008b')
+                        .setTitle(`<:perm:923904697423777792> ${entry.tag} Was Trying To Raid But Failed Miserabely [Added A Bot]`)
+                        .setDescription(`<:bell_emoji:914129896958205982> **Details :**
+<:space:874678195843125278><:right:874690882417360986> User : <@${entry.id}>` + '`[' + entry.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Bot : <@${member.id}>` + '`[' + member.tag + ']`' + `
+`)
+                        .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+                }).catch(e => {
+                    let logsembed = new Discord.MessageEmbed()
+                        .setColor('#f67975')
+                        .setTitle(`<:perm:923904697423777792> ${entry.tag} Is Adding Bot But Failed To Ban Him/Her`)
+                        .setDescription('** **\n```\n' + e + '\n```')
+                    return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+                })
+
+            }
+        }
+    }
+})
+// --------------------------------------------
 
 process.on('unhandledRejection', err => {
 
