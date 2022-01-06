@@ -112,7 +112,7 @@ client.on("roleCreate", async role => {
         let extraowners = db.get(`extraowners_${role.guild.id}`)
         let logs = db.get(`acitonslogs_${role.guild.id}`)
 
-        if(entry.id === role.guild.ownerId || entry.id === client.id) {
+        if (entry.id === role.guild.ownerId || entry.id === client.id) {
             return;
         }
 
@@ -184,7 +184,7 @@ client.on("roleDelete", async role => {
         let extraowners = db.get(`extraowners_${role.guild.id}`)
         let logs = db.get(`acitonslogs_${role.guild.id}`)
 
-        if(entry.id === role.guild.ownerId || entry.id === client.id) {
+        if (entry.id === role.guild.ownerId || entry.id === client.id) {
             return;
         }
 
@@ -254,7 +254,7 @@ client.on("channelCreate", async channel => {
         let extraowners = db.get(`extraowners_${channel.guild.id}`)
         let logs = db.get(`acitonslogs_${channel.guild.id}`)
 
-        if(entry.id === channel.guild.ownerId || entry.id === client.id) {
+        if (entry.id === channel.guild.ownerId || entry.id === client.id) {
             return;
         }
 
@@ -324,7 +324,7 @@ client.on("channelDelete", async channel => {
         let extraowners = db.get(`extraowners_${channel.guild.id}`)
         let logs = db.get(`acitonslogs_${channel.guild.id}`)
 
-        if(entry.id === channel.guild.ownerId || entry.id === client.id) {
+        if (entry.id === channel.guild.ownerId || entry.id === client.id) {
             return;
         }
 
@@ -402,7 +402,7 @@ client.on("guildMemberRemove", async member => {
             let extraowners = db.get(`extraowners_${member.guild.id}`)
             let logs = db.get(`acitonslogs_${member.guild.id}`)
 
-            if(entry.id === member.guild.ownerId || entry.id === client.id) {
+            if (entry.id === member.guild.ownerId || entry.id === client.id) {
                 return;
             }
 
@@ -477,7 +477,7 @@ client.on("guildMemberRemove", async member => {
                 .then(audit => audit.entries.first());
             const entry = entry2.executor;
 
-            if(entry.id === member.guild.ownerId || entry.id === client.id) {
+            if (entry.id === member.guild.ownerId || entry.id === client.id) {
                 return;
             }
 
@@ -540,6 +540,7 @@ client.on("guildMemberRemove", async member => {
 })
 
 // --------------------------------------------
+
 client.on("guildMemberAdd", async member => {
     if (member.guild.members.cache.get(client.user.id).permissions.has("ADMINISTRATOR")) {
 
@@ -553,14 +554,14 @@ client.on("guildMemberAdd", async member => {
                 })
                 .then(audit => audit.entries.first());
             const entry = entry2.executor;
-            
+
             let trustedusers = db.get(`trustedusers_${member.guild.id}`)
             let extraowners = db.get(`extraowners_${member.guild.id}`)
             let logs = db.get(`acitonslogs_${member.guild.id}`)
             let value = db.get(`addbot_${member.guild.id}`)
-            
+
             if (value === "true" && logs) {
-                if(entry.id === member.guild.ownerId || entry.id === client.id) {
+                if (entry.id === member.guild.ownerId || entry.id === client.id) {
                     return;
                 }
                 if (extraowners && extraowners.find(find => find.user == entry.id)) {
@@ -569,7 +570,7 @@ client.on("guildMemberAdd", async member => {
                         .setTitle(`<:check:923151545401479179> ${entry.tag} Added A Bot But He/She Is In Extra Owner`)
                         .setDescription(`<:bell_emoji:914129896958205982> **Details :**
 <:space:874678195843125278><:right:874690882417360986> User : <@${entry.id}>` + '`[' + entry.tag + ']`' + `
-<:space:874678195843125278><:right:874690882417360986> Bot : <@${member.id}>` + '`[' + member.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Bot : <@${member.user.id}>` + '`[' + member.user.tag + ']`' + `
 `)
                     return client.channels.cache.get(logs).send({ embeds: [trustedac] });
                 }
@@ -580,7 +581,7 @@ client.on("guildMemberAdd", async member => {
                         .setTitle(`<:check:923151545401479179> ${entry.tag} Added A Bot But He/She Is In Trusted Users`)
                         .setDescription(`<:bell_emoji:914129896958205982> **Details :**
 <:space:874678195843125278><:right:874690882417360986> User : <@${entry.id}>` + '`[' + entry.tag + ']`' + `
-<:space:874678195843125278><:right:874690882417360986> Bot : <@${member.id}>` + '`[' + member.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Bot : <@${member.user.id}>` + '`[' + member.user.tag + ']`' + `
 `)
                     return client.channels.cache.get(logs).send({ embeds: [trustedac] });
                 }
@@ -605,6 +606,81 @@ client.on("guildMemberAdd", async member => {
                 })
 
             }
+        }
+    }
+})
+
+// --------------------------------------------
+
+client.on("messageCreate", message => {
+    if (message.guild.members.cache.get(client.user.id).permissions.has("ADMINISTRATOR")) {
+        var antievery = db.get(`every_${message.guild.id}`)
+        var antiinv = db.get(`inv_${message.guild.id}`)
+        var antiweb = db.get(`weblink_${message.guild.id}`)
+        var antimaleware = db.get(`malware_${message.guild.id}`)
+
+        let logs = db.get(`acitonslogs_${message.guild.id}`)
+        let trustedusers = db.get(`trustedusers_${message.guild.id}`)
+        let extraowners = db.get(`extraowners_${message.guild.id}`)
+
+        if (antievery === 'true' && logs) {
+            if (message.content.includes('@here') || message.content.includes('@everyone')) {
+                if(trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id){
+                    return;
+                }
+                message.delete()
+                let logsembed = new Discord.MessageEmbed()
+                    .setColor('#00008b')
+                    .setTitle(`<:perm:923904697423777792> ${message.author.tag} Pinged Everyone/Here | Successfully Deleted`)
+                    .setDescription(`<:bell_emoji:914129896958205982> **Details :**
+<:space:874678195843125278><:right:874690882417360986> User : <@${message.author.id}>` + '`[' + message.author.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Channel : <#${message.channel.id}>` + '`[' + message.channel.name + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Content : \n${message.content}
+
+`)
+                    .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+            };
+        }
+
+        if (antiinv === 'true' && logs) {
+            if (message.content.includes('https://discord.gg') || message.content.includes('http://discord.gg') || message.content.includes('https://discord.com/invite/')) {
+                if(trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id){
+                    return;
+                }
+                message.delete()
+                let logsembed = new Discord.MessageEmbed()
+                    .setColor('#00008b')
+                    .setTitle(`<:perm:923904697423777792> ${message.author.tag} Shared Discord Invite | Successfully Deleted`)
+                    .setDescription(`<:bell_emoji:914129896958205982> **Details :**
+<:space:874678195843125278><:right:874690882417360986> User : <@${message.author.id}>` + '`[' + message.author.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Channel : <#${message.channel.id}>` + '`[' + message.channel.name + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Content : \n${message.content}
+
+`)
+                    .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+            };
+        }
+
+        if (antiinv === 'true' && logs) {
+            if (message.content.includes('www.') || message.content.includes('http') || message.content.includes('.com') || message.content.includes('.ir') || message.content.includes('.me') || message.content.includes('.tv')) {
+                if(trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id){
+                    return;
+                }
+                message.delete()
+                let logsembed = new Discord.MessageEmbed()
+                    .setColor('#00008b')
+                    .setTitle(`<:perm:923904697423777792> ${message.author.tag} Shared Website Link | Successfully Deleted`)
+                    .setDescription(`<:bell_emoji:914129896958205982> **Details :**
+<:space:874678195843125278><:right:874690882417360986> User : <@${message.author.id}>` + '`[' + message.author.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Channel : <#${message.channel.id}>` + '`[' + message.channel.name + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Content : \n${message.content}
+
+`)
+                    .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+            };
         }
     }
 })
