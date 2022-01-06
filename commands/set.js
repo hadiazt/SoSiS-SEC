@@ -8,12 +8,12 @@ const { OWNER } = require('../data/config.json')
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('set')
-    .setDescription('Set Guild Anit Raid Config')
+    .setDescription('Set Guild Limitation Config')
     .addStringOption(option =>
       option.setName('config')
         .setDescription('Type Of Config')
         .setRequired(true)
-        .addChoice('Set Role Create Limit', 'setrolecreatelimit',)
+        .addChoice('Set Role Create Limit', 'setrolecreatelimit')
         .addChoice('Set Role Delete Limit', 'setroledeletelimit')
         .addChoice('Set Channel Create Limit', 'setchannelcreatelimit')
         .addChoice('Set Channel Delete Limit', 'setchanneldeletelimit')
@@ -44,7 +44,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -76,7 +77,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -108,7 +110,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -140,7 +143,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -172,7 +176,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -204,7 +209,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -241,7 +247,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -273,7 +280,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -305,7 +313,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -337,7 +346,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -369,7 +379,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
@@ -402,7 +413,8 @@ module.exports = {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         context.font = '100px OpenSans-SemiBoldItalic';
         context.fillStyle = 'black';
-       context.fillText(interaction.user.tag, 720, 270, 300, 250);        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
+        context.fillText(interaction.user.tag, 720, 270, 300, 250);
+        context.fillText(`Changes ${config} Limits To ${num}`, 470, 640, 700, 250);
         context.beginPath();
         context.arc(250, 250, 200, 0, 2 * Math.PI);
         context.clip();
