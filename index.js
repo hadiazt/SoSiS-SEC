@@ -663,9 +663,12 @@ client.on("messageCreate", message => {
             };
         }
 
-        if (antiinv === 'true' && logs) {
+        if (antiweb === 'true' && logs) {
             if (message.content.includes('www.') || message.content.includes('http') || message.content.includes('.com') || message.content.includes('.ir') || message.content.includes('.me') || message.content.includes('.tv')) {
                 if(trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id){
+                    return;
+                }
+                if(message.content.endsWith('.gif') || message.content.endsWith('.png')|| message.content.endsWith('.jpg') || message.content.endsWith('.jpeg') || message.content.endsWith('.webp')) {
                     return;
                 }
                 message.delete()
