@@ -46,6 +46,8 @@ module.exports = {
                                 '\n`Shows Guild Trusted Users`' +
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> status [everyone]`+
                                 '\n`Shows Bot Status`' +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> updatelog [everyone]`+
+                                '\n`Shows Bot Update Log`' +
                                 ``)
                 return interaction.reply({ embeds: [infoembed], components: [infobtn] })
         }
