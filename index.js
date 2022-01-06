@@ -112,6 +112,10 @@ client.on("roleCreate", async role => {
         let extraowners = db.get(`extraowners_${role.guild.id}`)
         let logs = db.get(`acitonslogs_${role.guild.id}`)
 
+        if(entry.id === role.guild.ownerId || entry.id === client.id) {
+            return;
+        }
+
         if (extraowners && extraowners.find(find => find.user == entry.id)) {
             let trustedac = new Discord.MessageEmbed()
                 .setColor('#85db61')
@@ -140,7 +144,6 @@ client.on("roleCreate", async role => {
 
         if (author >= limts && logs) {
             db.delete(`executer_${role.guild.id}_${entry.id}_rolecreate`)
-
             role.guild.members.ban(entry.id).then(a => {
                 let logsembed = new Discord.MessageEmbed()
                     .setColor('#00008b')
@@ -180,6 +183,10 @@ client.on("roleDelete", async role => {
         let trustedusers = db.get(`trustedusers_${role.guild.id}`)
         let extraowners = db.get(`extraowners_${role.guild.id}`)
         let logs = db.get(`acitonslogs_${role.guild.id}`)
+
+        if(entry.id === role.guild.ownerId || entry.id === client.id) {
+            return;
+        }
 
         if (extraowners && extraowners.find(find => find.user == entry.id)) {
             let trustedac = new Discord.MessageEmbed()
@@ -247,6 +254,10 @@ client.on("channelCreate", async channel => {
         let extraowners = db.get(`extraowners_${channel.guild.id}`)
         let logs = db.get(`acitonslogs_${channel.guild.id}`)
 
+        if(entry.id === channel.guild.ownerId || entry.id === client.id) {
+            return;
+        }
+
         if (extraowners && extraowners.find(find => find.user == entry.id)) {
             let trustedac = new Discord.MessageEmbed()
                 .setColor('#85db61')
@@ -313,6 +324,10 @@ client.on("channelDelete", async channel => {
         let extraowners = db.get(`extraowners_${channel.guild.id}`)
         let logs = db.get(`acitonslogs_${channel.guild.id}`)
 
+        if(entry.id === channel.guild.ownerId || entry.id === client.id) {
+            return;
+        }
+
         if (extraowners && extraowners.find(find => find.user == entry.id)) {
             let trustedac = new Discord.MessageEmbed()
                 .setColor('#85db61')
@@ -372,7 +387,6 @@ client.on("channelDelete", async channel => {
 
 client.on("guildMemberRemove", async member => {
     if (member.guild.members.cache.get(client.user.id).permissions.has("ADMINISTRATOR")) {
-
         const entry1 = await member.guild
             .fetchAuditLogs()
             .then(audit => audit.entries.first());
@@ -387,6 +401,10 @@ client.on("guildMemberRemove", async member => {
             let trustedusers = db.get(`trustedusers_${member.guild.id}`)
             let extraowners = db.get(`extraowners_${member.guild.id}`)
             let logs = db.get(`acitonslogs_${member.guild.id}`)
+
+            if(entry.id === member.guild.ownerId || entry.id === client.id) {
+                return;
+            }
 
             if (extraowners && extraowners.find(find => find.user == entry.id)) {
                 let trustedac = new Discord.MessageEmbed()
@@ -458,6 +476,10 @@ client.on("guildMemberRemove", async member => {
                 })
                 .then(audit => audit.entries.first());
             const entry = entry2.executor;
+
+            if(entry.id === member.guild.ownerId || entry.id === client.id) {
+                return;
+            }
 
             let trustedusers = db.get(`trustedusers_${member.guild.id}`)
             let extraowners = db.get(`extraowners_${member.guild.id}`)
@@ -531,12 +553,16 @@ client.on("guildMemberAdd", async member => {
                 })
                 .then(audit => audit.entries.first());
             const entry = entry2.executor;
-
+            
             let trustedusers = db.get(`trustedusers_${member.guild.id}`)
             let extraowners = db.get(`extraowners_${member.guild.id}`)
             let logs = db.get(`acitonslogs_${member.guild.id}`)
-
-            if (`antibot_${member.guild.id}` === true && logs) {
+            let value = db.get(`addbot_${member.guild.id}`)
+            
+            if (value === "true" && logs) {
+                if(entry.id === member.guild.ownerId || entry.id === client.id) {
+                    return;
+                }
                 if (extraowners && extraowners.find(find => find.user == entry.id)) {
                     let trustedac = new Discord.MessageEmbed()
                         .setColor('#85db61')
@@ -566,7 +592,7 @@ client.on("guildMemberAdd", async member => {
                         .setTitle(`<:perm:923904697423777792> ${entry.tag} Was Trying To Raid But Failed Miserabely [Added A Bot]`)
                         .setDescription(`<:bell_emoji:914129896958205982> **Details :**
 <:space:874678195843125278><:right:874690882417360986> User : <@${entry.id}>` + '`[' + entry.tag + ']`' + `
-<:space:874678195843125278><:right:874690882417360986> Bot : <@${member.id}>` + '`[' + member.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Bot : <@${member.user.id}>` + '`[' + member.user.tag + ']`' + `
 `)
                         .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
                     return client.channels.cache.get(logs).send({ embeds: [logsembed] });
@@ -582,6 +608,7 @@ client.on("guildMemberAdd", async member => {
         }
     }
 })
+
 // --------------------------------------------
 
 process.on('unhandledRejection', err => {
