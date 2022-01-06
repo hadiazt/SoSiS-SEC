@@ -13,7 +13,7 @@
     "os-utils":"^0.0.14"
   },
   "name": "sosis-sec",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "antinuke",
   "main": "index.js",
   "scripts": {
