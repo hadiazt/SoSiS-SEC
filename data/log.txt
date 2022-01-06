@@ -1,0 +1,9 @@
+V 1.1.0 :
+1) Added trusted admins (can't edit set but can do every thing)
+2) Added extra owners (can add ta & can edit set)
+3) some hot fix
+
+V 1.1.2 :
+1) Added ANTI ( bot / everyone / here / link /  discord invites )
+2) Added update log command
+3) Updated set command & info command texts
