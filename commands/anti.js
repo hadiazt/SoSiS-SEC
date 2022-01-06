@@ -86,7 +86,7 @@ module.exports = {
             context.drawImage(background, 0, 0, canvas.width, canvas.height);
             context.font = '100px OpenSans-SemiBoldItalic';
             context.fillStyle = 'black';
-            context.fillText(interaction.user.tag, 720, 270, 300, 250); context.fillText(`Changes ${config} Limits To ${value}`, 470, 640, 700, 250);
+            context.fillText(interaction.user.tag, 720, 270, 300, 250); context.fillText(`${config} Has Been Turned ${value}`, 470, 640, 700, 250);
             context.beginPath();
             context.arc(250, 250, 200, 0, 2 * Math.PI);
             context.clip();
@@ -155,7 +155,7 @@ module.exports = {
             context.drawImage(background, 0, 0, canvas.width, canvas.height);
             context.font = '100px OpenSans-SemiBoldItalic';
             context.fillStyle = 'black';
-            context.fillText(interaction.user.tag, 720, 270, 300, 250); context.fillText(`Changes ${config} Limits To ${value}`, 470, 640, 700, 250);
+            context.fillText(interaction.user.tag, 720, 270, 300, 250); context.fillText(`${config} Has Been Turned ${value}`, 470, 640, 700, 250);
             context.beginPath();
             context.arc(250, 250, 200, 0, 2 * Math.PI);
             context.clip();
