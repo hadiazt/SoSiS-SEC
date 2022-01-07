@@ -7,3 +7,6 @@ V 1.1.2 :
 1) Added ANTI ( bot / everyone / here / link /  discord invites )
 2) Added update log command
 3) Updated set command & info command texts
+
+v 1.1.5 : (BETA)
+1) Added Anti NSFW
