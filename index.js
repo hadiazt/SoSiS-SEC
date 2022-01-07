@@ -9,6 +9,7 @@ const { readdirSync } = require('fs');
 const CONFIG = require('./data/config.json')
 client.login(CONFIG.TOKEN)
 const { GIFS } = require('./data/config.json')
+const { NSFW } = require('./data/links.json')
 
 client.on('ready', () => {
     setInterval(() => {
@@ -618,6 +619,7 @@ client.on("messageCreate", message => {
         var antiinv = db.get(`inv_${message.guild.id}`)
         var antiweb = db.get(`weblink_${message.guild.id}`)
         var antimaleware = db.get(`malware_${message.guild.id}`)
+        var antiNSFW = db.get(`antinsfw_${message.guild.id}`)
 
         let logs = db.get(`acitonslogs_${message.guild.id}`)
         let trustedusers = db.get(`trustedusers_${message.guild.id}`)
@@ -625,7 +627,7 @@ client.on("messageCreate", message => {
 
         if (antievery === 'true' && logs) {
             if (message.content.includes('@here') || message.content.includes('@everyone')) {
-                if(trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id){
+                if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id) {
                     return;
                 }
                 message.delete()
@@ -645,7 +647,7 @@ client.on("messageCreate", message => {
 
         if (antiinv === 'true' && logs) {
             if (message.content.includes('https://discord.gg') || message.content.includes('http://discord.gg') || message.content.includes('https://discord.com/invite/')) {
-                if(trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id){
+                if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id) {
                     return;
                 }
                 message.delete()
@@ -665,10 +667,10 @@ client.on("messageCreate", message => {
 
         if (antiweb === 'true' && logs) {
             if (message.content.includes('www.') || message.content.includes('http') || message.content.includes('.com') || message.content.includes('.ir') || message.content.includes('.me') || message.content.includes('.tv')) {
-                if(trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id){
+                if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id) {
                     return;
                 }
-                if(message.content.endsWith('.gif') || message.content.endsWith('.png')|| message.content.endsWith('.jpg') || message.content.endsWith('.jpeg') || message.content.endsWith('.webp')) {
+                if (message.content.endsWith('.gif') || message.content.endsWith('.png') || message.content.endsWith('.jpg') || message.content.endsWith('.jpeg') || message.content.endsWith('.webp')) {
                     return;
                 }
                 message.delete()
@@ -685,7 +687,31 @@ client.on("messageCreate", message => {
                 return client.channels.cache.get(logs).send({ embeds: [logsembed] });
             };
         }
+
+        if (antiNSFW === 'true' && logs) {
+            if (message.content) {
+                NSFW.forEach(link => {
+                    if (message.content.includes(link)) {
+                        if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id) {
+                            return;
+                        }
+                        message.delete()
+                        let logsembed = new Discord.MessageEmbed()
+                            .setColor('#00008b')
+                            .setTitle(`<:perm:923904697423777792> ${message.author.tag} Shared NSFW Website | Successfully Deleted`)
+                            .setDescription(`<:bell_emoji:914129896958205982> **Details :**
+        <:space:874678195843125278><:right:874690882417360986> User : <@${message.author.id}>` + '`[' + message.author.tag + ']`' + `
+        <:space:874678195843125278><:right:874690882417360986> Channel : <#${message.channel.id}>` + '`[' + message.channel.name + ']`' + `
+        <:space:874678195843125278><:right:874690882417360986> Content : \n${message.content}
+`)
+                            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+                    }
+                });
+            }
+        }
     }
+    
 })
 
 // --------------------------------------------

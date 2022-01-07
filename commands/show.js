@@ -33,11 +33,14 @@ module.exports = {
                 let antiinv = db.get(`inv_${interaction.guild.id}`)
                 let intiweblink = db.get(`weblink_${interaction.guild.id}`)
                 let antimalware = db.get(`malware_${interaction.guild.id}`)
+                let antiNSFW = db.get(`antinsfw_${interaction.guild.id}`)
+
                 if (antibot === 'true') antibot = '<:enable:923158125790494761> ** **'; else antibot = "<:disable:923158125878575144>";
                 if (antievery === 'true') antievery = '<:enable:923158125790494761> ** **'; else antievery = "<:disable:923158125878575144>";
                 if (antiinv === 'true') antiinv = '<:enable:923158125790494761> ** **'; else antiinv = "<:disable:923158125878575144>";
                 if (intiweblink === 'true') intiweblink = '<:enable:923158125790494761> ** **'; else intiweblink = "<:disable:923158125878575144>";
                 if (antimalware === 'true') antimalware = '<:enable:923158125790494761> ** **'; else antimalware = "<:disable:923158125878575144>";
+                if (antiNSFW === 'true') antiNSFW = '<:enable:923158125790494761> ** **'; else antiNSFW = "<:disable:923158125878575144>";
 
 
 
@@ -58,7 +61,8 @@ module.exports = {
                                         { name: 'Anti Everyone/here', value: '** **' + antievery, inline: true },
                                         { name: 'Anti Invite Link', value: '** **' + antiinv, inline: true },
                                         { name: 'Anti Website Link', value: '** **' + intiweblink, inline: true },
-                                        { name: 'Anti Malware Link', value: '** **' + antimalware, inline: true },
+                                        { name: 'Anti Malware Link', value: '** **' + antimalware, inline: true },                                        
+                                        { name: 'Anti NSFW Website', value: '** **' + antiNSFW, inline: true },
                                 )
                         return interaction.reply({
                                 embeds: [showembed]
@@ -81,6 +85,7 @@ module.exports = {
                                         { name: 'Anti Invite Link', value: '** **' + antiinv, inline: true },
                                         { name: 'Anti Website Link', value: '** **' + intiweblink, inline: true },
                                         { name: 'Anti Malware Link', value: '** **' + antimalware, inline: true },
+                                        { name: 'Anti NSFW Website', value: '** **' + antiNSFW, inline: true },
                                 )
                         return interaction.reply({
                                 embeds: [showembed]
@@ -103,6 +108,7 @@ module.exports = {
                                         { name: 'Anti Invite Link', value: '** **' + antiinv, inline: true },
                                         { name: 'Anti Website Link', value: '** **' + intiweblink, inline: true },
                                         { name: 'Anti Malware Link', value: '** **' + antimalware, inline: true },
+                                        { name: 'Anti NSFW Website', value: '** **' + antiNSFW, inline: true },
                                 )
                         return interaction.reply({
                                 embeds: [showembed]

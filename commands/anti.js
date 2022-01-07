@@ -18,6 +18,7 @@ module.exports = {
                 .addChoice('Anti Discord Invites', 'antiinvite')
                 .addChoice('Anti Website Link', 'antiweblink')
                 .addChoice('Anti Malware Link', 'antimalware')
+                .addChoice('Anti NSFW Website', 'antinsfw')
         )
         .addStringOption(option =>
             option.setName('value')
@@ -74,6 +75,14 @@ module.exports = {
                 }
                 if (value === 'OFF') {
                     db.set(`malware_${interaction.guild.id}`, 'false')
+                }
+            }
+            if (config === 'antinsfw') {
+                if (value === 'ON') {
+                    db.set(`antinsfw_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`antinsfw_${interaction.guild.id}`, 'false')
                 }
             }
 
@@ -143,6 +152,15 @@ module.exports = {
                 }
                 if (value === 'OFF') {
                     db.set(`malware_${interaction.guild.id}`, 'false')
+                }
+            }
+
+            if (config === 'antinsfw') {
+                if (value === 'ON') {
+                    db.set(`antinsfw_${interaction.guild.id}`, 'true')
+                }
+                if (value === 'OFF') {
+                    db.set(`antinsfw_${interaction.guild.id}`, 'false')
                 }
             }
 
