@@ -700,9 +700,9 @@ client.on("messageCreate", message => {
                             .setColor('#00008b')
                             .setTitle(`<:perm:923904697423777792> ${message.author.tag} Shared NSFW Website | Successfully Deleted`)
                             .setDescription(`<:bell_emoji:914129896958205982> **Details :**
-        <:space:874678195843125278><:right:874690882417360986> User : <@${message.author.id}>` + '`[' + message.author.tag + ']`' + `
-        <:space:874678195843125278><:right:874690882417360986> Channel : <#${message.channel.id}>` + '`[' + message.channel.name + ']`' + `
-        <:space:874678195843125278><:right:874690882417360986> Content : \n${message.content}
+<:space:874678195843125278><:right:874690882417360986> User : <@${message.author.id}>` + '`[' + message.author.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Channel : <#${message.channel.id}>` + '`[' + message.channel.name + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Content : \n${message.content}
 `)
                             .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
                         return client.channels.cache.get(logs).send({ embeds: [logsembed] });
