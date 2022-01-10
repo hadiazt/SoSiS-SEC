@@ -5,8 +5,22 @@ const { supportserver, INV } = require("../data/config.json")
 module.exports = {
         data: new SlashCommandBuilder()
                 .setName('info')
-                .setDescription('Information About How Bot Works'),
+                .setDescription('Information About How Bot Works')
+                .addStringOption(option =>
+                        option.setName('type')
+                                .setDescription('Type Of Info')
+                                .setRequired(true)
+                                .addChoice('Bot', 'bot')
+                                .addChoice('Anti Raid', 'ar')
+                                .addChoice('Join Gate', 'jg')
+                                .addChoice('Anti Nuke', 'an')
+
+                ),
         async execute(interaction, client) {
+
+                let namev = interaction.option.get('type').name
+                let type = interaction.option.get('type').value
+
                 const infobtn = new Discord.MessageActionRow().addComponents(
                         new Discord.MessageButton()
                                 .setLabel('INVITE BOT')
@@ -20,39 +34,58 @@ module.exports = {
 
                 const infoembed = new Discord.MessageEmbed()
                         .setColor('#85db61')
-                        .setTitle(`${client.user.username}'s Panel : `)
-                        .setDescription(`
-**<:bell_emoji:914129896958205982> General Information :**
+
+                if (type === 'bot') {
+                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${namev} Info : `)
+                        infoembed.setDescription(`
 <:space:874678195843125278><:right:874690882417360986> Do Not Forget To Set AcitonLog For Server To Track What Trusted Users Are 
+
 <:space:874678195843125278><:space:874678195843125278><:space:874678195843125278> Doing Or Informing About Users Warns Or Punishes
+
 <:space:874678195843125278><:right:874690882417360986> Make Sure Bot Has `+ '`ADMINISTRATOR`' + ` Permission For Working Well
-<:space:874678195843125278><:right:874690882417360986> All The Trusted Users Can Delete/Create/Ban/Kick And Extra Owners Can Modify Bot Guild Settings
-**<:perm:923904697423777792> Commands Permission List :**`+
-                                `\n\n<:space:874678195843125278><:right:874690882417360986> addtrusted (user) [Guild Owner] ` +
-                                '\n`For Adding Guild Trusted Users`' +
-                                `\n\n<:space:874678195843125278><:right:874690882417360986> removetrusted (user) [Guild Owner]` +
-                                '\n`For Removing Guild Trusted Users`' +
-                                `\n\n<:space:874678195843125278><:right:874690882417360986> set (type) (limit) [Guild Owner & Guild Extra Owners]` +
-                                '\n`For Setting Aciton Limits`' +
-                                `\n\n<:space:874678195843125278><:right:874690882417360986> anti (type) (ON/OFF) [Guild Owner & Guild Extra Owners]` +
-                                '\n`For Setting Anti Raid`' +
-                                `\n\n<:space:874678195843125278><:right:874690882417360986> acitonlog (channel) [Guild Owner & Guild Extra Owners]` +
-                                '\n`For Tracking Users Acitons`' +
-                                `\n\n<:space:874678195843125278><:right:874690882417360986> clearuser (user) [Guild Owner & Guild Extra Owners]` +
-                                '\n`For Removing User Active Warns (All Warns Resets Every Minute)`' +
-                                `\n\n<:space:874678195843125278><:right:874690882417360986> show [Guild Owner & Guild Extra Owners & Guild Trusted Users]` +
-                                '\n`Shows Guild Aciton Limits And AcitonLog If Defined`' +
-                                `\n\n<:space:874678195843125278><:right:874690882417360986> trustedlist [everyone]`+
-                                '\n`Shows Guild Trusted Users`' +
-                                `\n\n<:space:874678195843125278><:right:874690882417360986> status [everyone]`+
-                                '\n`Shows Bot Status`' +
-                                `\n\n<:space:874678195843125278><:right:874690882417360986> updatelog [everyone]`+
-                                '\n`Shows Bot Update Log`' +
-                                ``)
+
+<:space:874678195843125278><:right:874690882417360986> All The Trusted Users Are WhiteList For All Actions And Extra Owners Can Modify Bot Guild Settings
+
+** PUNISHS TYPE : **`)
+                        infoembed.addFields(
+                                { name: '\u200B', value: '\u200B' },
+                                { name: '** Anti Raid **', value: '** DELETE MESSAGE **', inline: true },
+                                { name: '** Join Gate **', value: '** KICK **', inline: true },
+                                { name: '** Anti Nuke **', value: '** BAN **', inline: true },
+                        )
+
+                }
+                if (type === 'ar') {
+                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${namev} Options : `)
+                        infoembed.setDescription(
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Anti Bot` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Anti Mention Everyone/Here` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Anti Discord Invite` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Anti Website Link` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Anti Malware Link` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Anti NSFW Link`
+                        )
+
+                }
+                if (type === 'jg') {
+                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${namev} Options : `)
+                        infoembed.setDescription(
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> No Avatar Filter` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Account Age Filter 1 - 7 Days`
+                        )
+                }
+                if (type === 'an') {
+                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${namev} Options : `)
+                        infoembed.setDescription(
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Role Creation` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Role Delete` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Channel Creation` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Channel Delete` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Ban` +
+                                `\n\n<:space:874678195843125278><:right:874690882417360986> Kick`
+                        )
+                }
                 return interaction.reply({ embeds: [infoembed], components: [infobtn] })
         }
 }
-
-
-
 
