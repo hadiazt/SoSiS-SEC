@@ -33,7 +33,7 @@ module.exports = {
     async execute(interaction, client) {
 
         var config = interaction.options.get('config').value
-        var name = interaction.options.get('value').name
+        var name = interaction.options.get('config').value
         var value = interaction.options.get('value').value
 
         let extraowners = db.get(`extraowners_${interaction.guild.id}`)

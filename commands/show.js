@@ -17,7 +17,7 @@ module.exports = {
                 ),
         async execute(interaction) {
 
-                let type = interaction.option.get('type').value
+                let type = interaction.options.get('type').value
                 // -------------------------------
                 let trustedusers = db.get(`trustedusers_${interaction.guild.id}`)
                 let extraowners = db.get(`extraowners_${interaction.guild.id}`)

@@ -10,7 +10,7 @@ const CONFIG = require('./data/config.json')
 client.login(CONFIG.TOKEN)
 const { GIFS } = require('./data/config.json')
 const { NSFW } = require('./data/links.json')
-var VER = require('../package.json').version
+var VER = require('./package.json').version
 
 client.on('ready', () => {
     setInterval(() => {
@@ -742,7 +742,8 @@ client.on("guildMemberAdd", async member => {
 
         if (logs) {
             if (noprfiltter === 'true') {
-                if (member.user.avatarURL({ format: 'png' }).startsWith('https://cdn.discordapp.com/embed/avatars/')) {
+                // if (member.user.avatarURL({ format: 'png' }).startsWith('https://cdn.discordapp.com/embed/avatars/')) {
+                if (member.user.avatarURL({ format: 'png' }) === null) {
                     let joinav = new Discord.MessageEmbed()
                         .setColor('#00008b')
                         .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)

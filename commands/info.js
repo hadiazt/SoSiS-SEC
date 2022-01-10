@@ -10,16 +10,15 @@ module.exports = {
                         option.setName('type')
                                 .setDescription('Type Of Info')
                                 .setRequired(true)
-                                .addChoice('Bot', 'bot')
-                                .addChoice('Anti Raid', 'ar')
-                                .addChoice('Join Gate', 'jg')
-                                .addChoice('Anti Nuke', 'an')
+                                .addChoice('Bot', 'Bot')
+                                .addChoice('Anti Raid', 'Anti Raid')
+                                .addChoice('Join Gate', 'Join Gate')
+                                .addChoice('Anti Nuke', 'Anti Nuke')
 
                 ),
         async execute(interaction, client) {
 
-                let namev = interaction.option.get('type').name
-                let type = interaction.option.get('type').value
+                let type = interaction.options.get('type').value
 
                 const infobtn = new Discord.MessageActionRow().addComponents(
                         new Discord.MessageButton()
@@ -35,8 +34,8 @@ module.exports = {
                 const infoembed = new Discord.MessageEmbed()
                         .setColor('#85db61')
 
-                if (type === 'bot') {
-                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${namev} Info : `)
+                if (type === 'Bot') {
+                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${type} Info : `)
                         infoembed.setDescription(`
 <:space:874678195843125278><:right:874690882417360986> Do Not Forget To Set AcitonLog For Server To Track What Trusted Users Are 
 
@@ -55,8 +54,8 @@ module.exports = {
                         )
 
                 }
-                if (type === 'ar') {
-                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${namev} Options : `)
+                if (type === 'Anti Raid') {
+                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${type} Options : `)
                         infoembed.setDescription(
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> Anti Bot` +
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> Anti Mention Everyone/Here` +
@@ -67,15 +66,15 @@ module.exports = {
                         )
 
                 }
-                if (type === 'jg') {
-                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${namev} Options : `)
+                if (type === 'Join Gate') {
+                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${type} Options : `)
                         infoembed.setDescription(
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> No Avatar Filter` +
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> Account Age Filter 1 - 7 Days`
                         )
                 }
-                if (type === 'an') {
-                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${namev} Options : `)
+                if (type === 'Anti Nuke') {
+                        infoembed.setTitle(`<:bell_emoji:914129896958205982> ${client.user.username}'s ${type} Options : `)
                         infoembed.setDescription(
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> Role Creation` +
                                 `\n\n<:space:874678195843125278><:right:874690882417360986> Role Delete` +
