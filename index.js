@@ -114,7 +114,7 @@ client.on("roleCreate", async role => {
         let extraowners = db.get(`extraowners_${role.guild.id}`)
         let logs = db.get(`acitonslogs_${role.guild.id}`)
 
-        if (entry.id === role.guild.ownerId || entry.id === client.id) {
+        if (entry.id === role.guild.ownerId || entry.id === client.user.id) {
             return;
         }
 
@@ -186,7 +186,7 @@ client.on("roleDelete", async role => {
         let extraowners = db.get(`extraowners_${role.guild.id}`)
         let logs = db.get(`acitonslogs_${role.guild.id}`)
 
-        if (entry.id === role.guild.ownerId || entry.id === client.id) {
+        if (entry.id === role.guild.ownerId || entry.id === client.user.id) {
             return;
         }
 
@@ -256,7 +256,7 @@ client.on("channelCreate", async channel => {
         let extraowners = db.get(`extraowners_${channel.guild.id}`)
         let logs = db.get(`acitonslogs_${channel.guild.id}`)
 
-        if (entry.id === channel.guild.ownerId || entry.id === client.id) {
+        if (entry.id === channel.guild.ownerId || entry.id === client.user.id) {
             return;
         }
 
@@ -326,7 +326,7 @@ client.on("channelDelete", async channel => {
         let extraowners = db.get(`extraowners_${channel.guild.id}`)
         let logs = db.get(`acitonslogs_${channel.guild.id}`)
 
-        if (entry.id === channel.guild.ownerId || entry.id === client.id) {
+        if (entry.id === channel.guild.ownerId || entry.id === client.user.id) {
             return;
         }
 
@@ -404,7 +404,7 @@ client.on("guildMemberRemove", async member => {
             let extraowners = db.get(`extraowners_${member.guild.id}`)
             let logs = db.get(`acitonslogs_${member.guild.id}`)
 
-            if (entry.id === member.guild.ownerId || entry.id === client.id) {
+            if (entry.id === member.guild.ownerId || entry.id === client.user.id) {
                 return;
             }
 
@@ -479,7 +479,7 @@ client.on("guildMemberRemove", async member => {
                 .then(audit => audit.entries.first());
             const entry = entry2.executor;
 
-            if (entry.id === member.guild.ownerId || entry.id === client.id) {
+            if (entry.id === member.guild.ownerId || entry.id === client.user.id) {
                 return;
             }
 
@@ -563,7 +563,7 @@ client.on("guildMemberAdd", async member => {
             let value = db.get(`addbot_${member.guild.id}`)
 
             if (value === "true" && logs) {
-                if (entry.id === member.guild.ownerId || entry.id === client.id) {
+                if (entry.id === member.guild.ownerId || entry.id === client.user.id) {
                     return;
                 }
                 if (extraowners && extraowners.find(find => find.user == entry.id)) {
@@ -614,8 +614,9 @@ client.on("guildMemberAdd", async member => {
 
 // --------------------------------------------
 
-client.on("messageCreate", message => {
+client.on("messageCreate", async (message) => {
     if (message.guild.members.cache.get(client.user.id).permissions.has("ADMINISTRATOR")) {
+
         var antievery = db.get(`every_${message.guild.id}`)
         var antiinv = db.get(`inv_${message.guild.id}`)
         var antiweb = db.get(`weblink_${message.guild.id}`)
@@ -714,11 +715,11 @@ client.on("messageCreate", message => {
     }
 
 })
+
 // --------------------------------------------
 
 client.on("guildMemberAdd", async member => {
     if (member.guild.members.cache.get(client.user.id).permissions.has("ADMINISTRATOR")) {
-
         let logs = db.get(`acitonslogs_${member.guild.id}`)
 
         let noprfiltter = db.get(`noprofilefilter_${member.guild.id}`)
@@ -739,11 +740,9 @@ client.on("guildMemberAdd", async member => {
         var SIXDAY = member.user.createdTimestamp + 518400000
         var SEVENDAY = member.user.createdTimestamp + 604800000
 
-
         if (logs) {
             if (noprfiltter === 'true') {
-                // if (member.user.avatarURL({ format: 'png' }).startsWith('https://cdn.discordapp.com/embed/avatars/')) {
-                if (member.user.avatarURL({ format: 'png' }) === null) {
+                if (member.user.avatar === null) {
                     let joinav = new Discord.MessageEmbed()
                         .setColor('#00008b')
                         .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
@@ -761,7 +760,7 @@ client.on("guildMemberAdd", async member => {
             // -----------------------------------
 
             if (agefilter1 === 'true') {
-                if (AGE > ONEDAY) {
+                if (AGE < ONEDAY) {
                     let joingate = new Discord.MessageEmbed()
                         .setColor('#00008b')
                         .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
@@ -778,7 +777,7 @@ client.on("guildMemberAdd", async member => {
             }
 
             if (agefilter2 === 'true') {
-                if (AGE > TWODAY) {
+                if (AGE < TWODAY) {
                     let joingate = new Discord.MessageEmbed()
                         .setColor('#00008b')
                         .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
@@ -795,7 +794,7 @@ client.on("guildMemberAdd", async member => {
             }
 
             if (agefilter3 === 'true') {
-                if (AGE > THREEDAY) {
+                if (AGE < THREEDAY) {
                     let joingate = new Discord.MessageEmbed()
                         .setColor('#00008b')
                         .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
@@ -812,7 +811,7 @@ client.on("guildMemberAdd", async member => {
             }
 
             if (agefilter4 === 'true') {
-                if (AGE > FOURDAY) {
+                if (AGE < FOURDAY) {
                     let joingate = new Discord.MessageEmbed()
                         .setColor('#00008b')
                         .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
@@ -829,7 +828,7 @@ client.on("guildMemberAdd", async member => {
             }
 
             if (agefilter5 === 'true') {
-                if (AGE > FIVEDAY) {
+                if (AGE < FIVEDAY) {
                     let joingate = new Discord.MessageEmbed()
                         .setColor('#00008b')
                         .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
@@ -846,7 +845,7 @@ client.on("guildMemberAdd", async member => {
             }
 
             if (agefilter6 === 'true') {
-                if (AGE > SIXDAY) {
+                if (AGE < SIXDAY) {
                     let joingate = new Discord.MessageEmbed()
                         .setColor('#00008b')
                         .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
@@ -863,7 +862,7 @@ client.on("guildMemberAdd", async member => {
             }
 
             if (agefilter7 === 'true') {
-                if (AGE > SEVENDAY) {
+                if (AGE < SEVENDAY) {
                     let joingate = new Discord.MessageEmbed()
                         .setColor('#00008b')
                         .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
