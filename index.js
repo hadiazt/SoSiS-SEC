@@ -10,6 +10,7 @@ const CONFIG = require('./data/config.json')
 client.login(CONFIG.TOKEN)
 const { GIFS } = require('./data/config.json')
 const { NSFW } = require('./data/links.json')
+var VER = require('../package.json').version
 
 client.on('ready', () => {
     setInterval(() => {
@@ -17,7 +18,7 @@ client.on('ready', () => {
             status: 'dnd',
             activities: [{
                 type: 'WATCHING',
-                name: `${client.guilds.cache.size} GUILDS | /info`,
+                name: `${client.guilds.cache.size} GUILDS | /info | V ${VER}`,
             }]
         });
         // ------------------------------------
@@ -711,7 +712,176 @@ client.on("messageCreate", message => {
             }
         }
     }
-    
+
+})
+// --------------------------------------------
+
+client.on("guildMemberAdd", async member => {
+    if (member.guild.members.cache.get(client.user.id).permissions.has("ADMINISTRATOR")) {
+
+        let logs = db.get(`acitonslogs_${member.guild.id}`)
+
+        let noprfiltter = db.get(`noprofilefilter_${member.guild.id}`)
+        let agefilter1 = db.get(`agefilter1_${member.guild.id}`)
+        let agefilter2 = db.get(`agefilter2_${member.guild.id}`)
+        let agefilter3 = db.get(`agefilter3_${member.guild.id}`)
+        let agefilter4 = db.get(`agefilter4_${member.guild.id}`)
+        let agefilter5 = db.get(`agefilter5_${member.guild.id}`)
+        let agefilter6 = db.get(`agefilter6_${member.guild.id}`)
+        let agefilter7 = db.get(`agefilter7_${member.guild.id}`)
+
+        var AGE = member.user.createdTimestamp
+        var ONEDAY = member.user.createdTimestamp + 86400000
+        var TWODAY = member.user.createdTimestamp + 172800000
+        var THREEDAY = member.user.createdTimestamp + 259200000
+        var FOURDAY = member.user.createdTimestamp + 345600000
+        var FIVEDAY = member.user.createdTimestamp + 432000000
+        var SIXDAY = member.user.createdTimestamp + 518400000
+        var SEVENDAY = member.user.createdTimestamp + 604800000
+
+
+        if (logs) {
+            if (noprfiltter === 'true') {
+                if (member.user.avatarURL({ format: 'png' }).startsWith('https://cdn.discordapp.com/embed/avatars/')) {
+                    let joinav = new Discord.MessageEmbed()
+                        .setColor('#00008b')
+                        .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
+                    member.send(`You Has Been Kicked From ${member.guild.name} | Join Gate (No Avatar Filter)`).then(a => {
+                        member.kick()
+                        joinav.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : No Avatar Filter\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:check:923151545401479179>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joinav] });
+                    }).catch(e => {
+                        member.kick()
+                        joinav.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : No Avatar Filter\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:ignore:923151545569267752>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joinav] });
+                    })
+                }
+            }
+            // -----------------------------------
+
+            if (agefilter1 === 'true') {
+                if (AGE > ONEDAY) {
+                    let joingate = new Discord.MessageEmbed()
+                        .setColor('#00008b')
+                        .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
+                    member.send(`You Has Been Kicked From ${member.guild.name} | Join Gate (Account Age Filter 1 Day)`).then(a => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 1 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:check:923151545401479179>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    }).catch(e => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 1 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:ignore:923151545569267752>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    })
+                }
+            }
+
+            if (agefilter2 === 'true') {
+                if (AGE > TWODAY) {
+                    let joingate = new Discord.MessageEmbed()
+                        .setColor('#00008b')
+                        .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
+                    member.send(`You Has Been Kicked From ${member.guild.name} | Join Gate (Account Age Filter 1 Day)`).then(a => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 2 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:check:923151545401479179>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    }).catch(e => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 2 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:ignore:923151545569267752>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    })
+                }
+            }
+
+            if (agefilter3 === 'true') {
+                if (AGE > THREEDAY) {
+                    let joingate = new Discord.MessageEmbed()
+                        .setColor('#00008b')
+                        .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
+                    member.send(`You Has Been Kicked From ${member.guild.name} | Join Gate (Account Age Filter 1 Day)`).then(a => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 3 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:check:923151545401479179>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    }).catch(e => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 3 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:ignore:923151545569267752>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    })
+                }
+            }
+
+            if (agefilter4 === 'true') {
+                if (AGE > FOURDAY) {
+                    let joingate = new Discord.MessageEmbed()
+                        .setColor('#00008b')
+                        .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
+                    member.send(`You Has Been Kicked From ${member.guild.name} | Join Gate (Account Age Filter 1 Day)`).then(a => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 4 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:check:923151545401479179>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    }).catch(e => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 4 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:ignore:923151545569267752>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    })
+                }
+            }
+
+            if (agefilter5 === 'true') {
+                if (AGE > FIVEDAY) {
+                    let joingate = new Discord.MessageEmbed()
+                        .setColor('#00008b')
+                        .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
+                    member.send(`You Has Been Kicked From ${member.guild.name} | Join Gate (Account Age Filter 1 Day)`).then(a => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 5 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:check:923151545401479179>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    }).catch(e => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 5 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:ignore:923151545569267752>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    })
+                }
+            }
+
+            if (agefilter6 === 'true') {
+                if (AGE > SIXDAY) {
+                    let joingate = new Discord.MessageEmbed()
+                        .setColor('#00008b')
+                        .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
+                    member.send(`You Has Been Kicked From ${member.guild.name} | Join Gate (Account Age Filter 1 Day)`).then(a => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 6 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:check:923151545401479179>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    }).catch(e => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 6 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:ignore:923151545569267752>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    })
+                }
+            }
+
+            if (agefilter7 === 'true') {
+                if (AGE > SEVENDAY) {
+                    let joingate = new Discord.MessageEmbed()
+                        .setColor('#00008b')
+                        .setTitle(`<:perm:923904697423777792> ${member.user.tag} Has Been Kicked`)
+                    member.send(`You Has Been Kicked From ${member.guild.name} | Join Gate (Account Age Filter 1 Day)`).then(a => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 7 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:check:923151545401479179>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    }).catch(e => {
+                        member.kick()
+                        joingate.setDescription(`<:bell_emoji:914129896958205982> **Details :**\n<:space:874678195843125278><:right:874690882417360986> Member : <@${member.user.id}> **[${member.user.id}]**\n<:space:874678195843125278><:right:874690882417360986> Reasson : Account Age Filter 7 Day\n<:space:874678195843125278><:right:874690882417360986> Member Direct Messaged ? : <:ignore:923151545569267752>\n`)
+                        return client.channels.cache.get(logs).send({ embeds: [joingate] });
+                    })
+                }
+            }
+
+        }
+    }
+
+
 })
 
 // --------------------------------------------
