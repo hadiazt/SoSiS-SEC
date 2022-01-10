@@ -628,7 +628,7 @@ client.on("messageCreate", message => {
 
         if (antievery === 'true' && logs) {
             if (message.content.includes('@here') || message.content.includes('@everyone')) {
-                if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id) {
+                if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.user.id) {
                     return;
                 }
                 message.delete()
@@ -648,7 +648,7 @@ client.on("messageCreate", message => {
 
         if (antiinv === 'true' && logs) {
             if (message.content.includes('https://discord.gg') || message.content.includes('http://discord.gg') || message.content.includes('https://discord.com/invite/')) {
-                if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id) {
+                if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.user.id) {
                     return;
                 }
                 message.delete()
@@ -668,7 +668,7 @@ client.on("messageCreate", message => {
 
         if (antiweb === 'true' && logs) {
             if (message.content.includes('www.') || message.content.includes('http') || message.content.includes('.com') || message.content.includes('.ir') || message.content.includes('.me') || message.content.includes('.tv')) {
-                if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id) {
+                if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.user.id) {
                     return;
                 }
                 if (message.content.endsWith('.gif') || message.content.endsWith('.png') || message.content.endsWith('.jpg') || message.content.endsWith('.jpeg') || message.content.endsWith('.webp')) {
@@ -693,7 +693,7 @@ client.on("messageCreate", message => {
             if (message.content) {
                 NSFW.forEach(link => {
                     if (message.content.includes(link)) {
-                        if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.id) {
+                        if (trustedusers && trustedusers.find(find => find.user == message.author.id) || extraowners && extraowners.find(find => find.user == message.author.id) || message.author.id === message.guild.ownerId || message.author.id === client.user.id) {
                             return;
                         }
                         message.delete()
