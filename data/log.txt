@@ -4,9 +4,11 @@ V 1.1.0 :
 3) some hot fix
 
 V 1.1.2 :
-1) Added ANTI ( bot / everyone / here / link /  discord invites )
+1) Added ANTI (bot/everyone/here/link/ discord invites)
 2) Added update log command
 3) Updated set command & info command texts
 
 v 1.1.5 : (BETA)
 1) Added Anti NSFW
+2) Updated Show / info Commands
+3) Added Join Gate (No Avatar Filter / Account Age Filter 1-7 Days)
