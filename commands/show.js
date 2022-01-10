@@ -51,14 +51,14 @@ module.exports = {
                 if (antimalware === 'true') antimalware = '<:enable:923158125790494761> ** **'; else antimalware = "<:disable:923158125878575144>";
                 if (antiNSFW === 'true') antiNSFW = '<:enable:923158125790494761> ** **'; else antiNSFW = "<:disable:923158125878575144>";
                 // -------------------------------
-                let noprfiltter = db.get(`noprofilefilter_${member.guild.id}`)
-                let agefilter1 = db.get(`agefilter1_${member.guild.id}`)
-                let agefilter2 = db.get(`agefilter2_${member.guild.id}`)
-                let agefilter3 = db.get(`agefilter3_${member.guild.id}`)
-                let agefilter4 = db.get(`agefilter4_${member.guild.id}`)
-                let agefilter5 = db.get(`agefilter5_${member.guild.id}`)
-                let agefilter6 = db.get(`agefilter6_${member.guild.id}`)
-                let agefilter7 = db.get(`agefilter7_${member.guild.id}`)
+                let noprfiltter = db.get(`noprofilefilter_${interaction.guild.id}`)
+                let agefilter1 = db.get(`agefilter1_${interaction.guild.id}`)
+                let agefilter2 = db.get(`agefilter2_${interaction.guild.id}`)
+                let agefilter3 = db.get(`agefilter3_${interaction.guild.id}`)
+                let agefilter4 = db.get(`agefilter4_${interaction.guild.id}`)
+                let agefilter5 = db.get(`agefilter5_${interaction.guild.id}`)
+                let agefilter6 = db.get(`agefilter6_${interaction.guild.id}`)
+                let agefilter7 = db.get(`agefilter7_${interaction.guild.id}`)
                 if (noprfiltter === 'true') noprfiltter = '<:enable:923158125790494761> ** **'; else noprfiltter = "<:disable:923158125878575144>";
                 if (agefilter1 === 'true') agefilter1 = '<:enable:923158125790494761> ** **'; else agefilter1 = "<:disable:923158125878575144>";
                 if (agefilter2 === 'true') agefilter2 = '<:enable:923158125790494761> ** **'; else agefilter2 = "<:disable:923158125878575144>";

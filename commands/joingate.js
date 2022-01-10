@@ -13,14 +13,14 @@ module.exports = {
             option.setName('config')
                 .setDescription('Type Of Config')
                 .setRequired(true)
-                .addChoice('No Avatar Filter', 'naf')
-                .addChoice('Account Age Filter 1 Day', 'acc1')
-                .addChoice('Account Age Filter 2 Day', 'acc2')
-                .addChoice('Account Age Filter 3 Day', 'acc3')
-                .addChoice('Account Age Filter 4 Day', 'acc4')
-                .addChoice('Account Age Filter 5 Day', 'acc5')
-                .addChoice('Account Age Filter 6 Day', 'acc6')
-                .addChoice('Account Age Filter 7 Day', 'acc7')
+                .addChoice('No Avatar Filter', 'No Avatgar Filter')
+                .addChoice('Account Age Filter 1 Day', 'Account Age Filter 1')
+                .addChoice('Account Age Filter 2 Day', 'Account Age Filter 2')
+                .addChoice('Account Age Filter 3 Day', 'Account Age Filter 3')
+                .addChoice('Account Age Filter 4 Day', 'Account Age Filter 4')
+                .addChoice('Account Age Filter 5 Day', 'Account Age Filter 5')
+                .addChoice('Account Age Filter 6 Day', 'Account Age Filter 6')
+                .addChoice('Account Age Filter 7 Day', 'Account Age Filter 7')
         )
         .addStringOption(option =>
             option.setName('value')
@@ -40,7 +40,7 @@ module.exports = {
         var log = db.get(`acitonslogs_${interaction.guild.id}`)
 
         if (extraowners && extraowners.find(find => find.user == interaction.user.id) || interaction.user.id === interaction.guild.ownerId || interaction.user.id === OWNER) {
-            if (config === 'naf') {
+            if (config === 'No Avatgar Filter') {
                 if (value === 'ON') {
                     db.set(`noprofilefilter_${interaction.guild.id}`, 'true')
                 }
@@ -49,7 +49,7 @@ module.exports = {
                 }
             }
 
-            if (config === 'acc1') {
+            if (config === 'Account Age Filter 1') {
                 if (value === 'ON') {
                     db.set(`agefilter1_${interaction.guild.id}`, 'true')
                 }
@@ -58,7 +58,7 @@ module.exports = {
                 }
             }
 
-            if (config === 'acc2') {
+            if (config === 'Account Age Filter 2') {
                 if (value === 'ON') {
                     db.set(`agefilter2_${interaction.guild.id}`, 'true')
                 }
@@ -67,7 +67,7 @@ module.exports = {
                 }
             }
 
-            if (config === 'acc3') {
+            if (config === 'Account Age Filter 3') {
                 if (value === 'ON') {
                     db.set(`agefilter3_${interaction.guild.id}`, 'true')
                 }
@@ -76,7 +76,7 @@ module.exports = {
                 }
             }
 
-            if (config === 'acc4') {
+            if (config === 'Account Age Filter 4') {
                 if (value === 'ON') {
                     db.set(`agefilter4_${interaction.guild.id}`, 'true')
                 }
@@ -85,7 +85,7 @@ module.exports = {
                 }
             }
 
-            if (config === 'acc5') {
+            if (config === 'Account Age Filter 5') {
                 if (value === 'ON') {
                     db.set(`agefilter5_${interaction.guild.id}`, 'true')
                 }
@@ -94,7 +94,7 @@ module.exports = {
                 }
             }
 
-            if (config === 'acc6') {
+            if (config === 'Account Age Filter 6') {
                 if (value === 'ON') {
                     db.set(`agefilter6_${interaction.guild.id}`, 'true')
                 }
@@ -103,7 +103,7 @@ module.exports = {
                 }
             }
 
-            if (config === 'acc7') {
+            if (config === 'Account Age Filter 7') {
                 if (value === 'ON') {
                     db.set(`agefilter7_${interaction.guild.id}`, 'true')
                 }
