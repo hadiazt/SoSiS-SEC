@@ -29,7 +29,7 @@ module.exports = {
                                 .setLabel('SUPPORT SERVER')
                                 .setStyle('LINK')
                                 .setURL(supportserver),
-                        new MessageButton()
+                        new Discord.MessageButton()
                                 .setLabel('SOURCE')
                                 .setStyle('LINK')
                                 .setURL(SRC),
@@ -49,7 +49,7 @@ module.exports = {
 
 <:space:874678195843125278><:right:874690882417360986> All The Trusted Users Are WhiteList For All Actions And Extra Owners Can Modify Bot Guild Settings
 
-Open Source LICENSE : [MIT] (https://github.com/hadiazt/SoSiS-SEC/blob/main/LICENSE)
+Open Source LICENSE : [MIT](https://github.com/hadiazt/SoSiS-SEC/blob/main/LICENSE)
 
 ** PUNISHS TYPE : **`)
                         infoembed.addFields(
