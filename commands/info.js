@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Discord = require("discord.js")
-const { supportserver, INV } = require("../data/config.json")
+const { supportserver, INV , SRC} = require("../data/config.json")
 
 module.exports = {
         data: new SlashCommandBuilder()
@@ -29,6 +29,10 @@ module.exports = {
                                 .setLabel('SUPPORT SERVER')
                                 .setStyle('LINK')
                                 .setURL(supportserver),
+                        new MessageButton()
+                                .setLabel('SOURCE')
+                                .setStyle('LINK')
+                                .setURL(SRC),
                 )
 
                 const infoembed = new Discord.MessageEmbed()
@@ -44,6 +48,8 @@ module.exports = {
 <:space:874678195843125278><:right:874690882417360986> Make Sure Bot Has `+ '`ADMINISTRATOR`' + ` Permission For Working Well
 
 <:space:874678195843125278><:right:874690882417360986> All The Trusted Users Are WhiteList For All Actions And Extra Owners Can Modify Bot Guild Settings
+
+Open Source LICENSE : [MIT] (https://github.com/hadiazt/SoSiS-SEC/blob/main/LICENSE)
 
 ** PUNISHS TYPE : **`)
                         infoembed.addFields(

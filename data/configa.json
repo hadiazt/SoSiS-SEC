@@ -6,6 +6,7 @@
     "JOIN": "879420520351805511",
     "ERROR":"879427034558922802",
     "supportserver": "https://discord.gg/6vhPVYkNU9",
+    "SRC":"https://github.com/hadiazt/SoSiS-SEC",
     "INV": "https://discord.com/api/oauth2/authorize?client_id=780703694886010902&permissions=8&scope=bot%20applications.commands",
     "GIFS": [
         "https://cdn.discordapp.com/attachments/851175404173918250/924384661814280252/ad14e73c2bda17bedbc77c37e8f7a2cc.gif",
