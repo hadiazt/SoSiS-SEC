@@ -7,7 +7,7 @@
 </br>
 </br>
 
-## Source Of [SoSiS-V2](https://discord.com/api/oauth2/authorize?client_id=780703694886010902&permissions=8&scope=bot%20applications.commands) Discord Bot
+## Source Of [SoSiS-SEC](https://discord.com/api/oauth2/authorize?client_id=780703694886010902&permissions=8&scope=bot%20applications.commands) Discord Bot
 
 </br>
 
