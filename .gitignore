@@ -1,3 +1,4 @@
 node_modules/
 pachage-lock.json
 data/config.json
+json.sqlite
