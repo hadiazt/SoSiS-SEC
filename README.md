@@ -2,7 +2,7 @@
   <img src="https://cdn.discordapp.com/avatars/780703694886010902/e59998f6c9580dcc5aec9d79b840b1ac.png?size=1024" width="224px" alt="discord"/>
 <br/>
 
-Source Of [SoSiS-SEC](https://discord.com/api/oauth2/authorize?client_id=762378493929455617&permissions=137439861953&scope=bot%20applications.commands) Discord Bot
+Source Of [SoSiS-SEC](https://discord.com/api/oauth2/authorize?client_id=780703694886010902&permissions=137439861953&scope=bot%20applications.commands) Discord Bot
 
 </h1>
 
