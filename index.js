@@ -9,7 +9,7 @@ const { readdirSync } = require('fs');
 const CONFIG = require('./data/config.json')
 client.login(CONFIG.TOKEN)
 const { GIFS } = require('./data/config.json')
-const { NSFW } = require('./data/links.json')
+const { NSFW, MALWARE } = require('./data/links.json')
 var VER = require('./package.json').version
 
 client.on('ready', () => {
@@ -705,6 +705,27 @@ client.on("messageCreate", async msg => {
                     });
                 }
             }
+
+            if (antimaleware === 'true') {
+                MALWARE.forEach(link => {
+                    if (msg.content.includes(link)) {
+                        if (trustedusers && trustedusers.find(find => find.user == msg.author.id) || extraowners && extraowners.find(find => find.user == msg.author.id) || msg.author.id === msg.guild.ownerId || msg.author.id === client.user.id) {
+                            return;
+                        }
+                        msg.delete()
+                        let logsembed = new Discord.MessageEmbed()
+                            .setColor('#00008b')
+                            .setTitle(`<:perm:923904697423777792> ${msg.author.tag} Shared MALWARE Website | Successfully Deleted`)
+                            .setDescription(`<:bell_emoji:914129896958205982> **Details :**
+<:space:874678195843125278><:right:874690882417360986> User : <@${msg.author.id}>` + '`[' + msg.author.tag + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Channel : <#${msg.channel.id}>` + '`[' + msg.channel.name + ']`' + `
+<:space:874678195843125278><:right:874690882417360986> Content : \n${msg.content}
+`)
+                            .setImage(GIFS[Math.floor(GIFS.length * Math.random())])
+                        return client.channels.cache.get(logs).send({ embeds: [logsembed] });
+                    }
+                });
+            }            
         }
 
     }
